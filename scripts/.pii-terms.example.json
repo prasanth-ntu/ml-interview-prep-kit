@@ -1,0 +1,31 @@
+{
+  "_comment": "Example PII scan config. Copy to .pii-terms.json and customize with your own terms.",
+  "critical_terms": [
+    "YourCompanyName",
+    "ProjectCodename",
+    "YourFullName",
+    "ConfidentialTerm"
+  ],
+  "case_sensitive_critical": [
+    "ACRONYM"
+  ],
+  "warning_terms": [
+    "my previous company",
+    "at work we",
+    "at my company"
+  ],
+  "critical_regex": [
+    {"pattern": "S\\$[\\d,]+", "description": "Singapore dollar amount"},
+    {"pattern": "\\bUSD\\s*[\\d,]+", "description": "USD currency amount"},
+    {"pattern": "yourname(?!\\.io)", "description": "Personal name in content"}
+  ],
+  "allowlist": {
+    "LICENSE": ["yourname"],
+    "README.md": ["yourname", "yourgithub"],
+    "CONTRIBUTING.md": ["yourname"]
+  },
+  "skip_files": [
+    ".pii-terms.json",
+    ".pii-terms.example.json"
+  ]
+}

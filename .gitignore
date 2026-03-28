@@ -1,0 +1,17 @@
+.DS_Store
+.venv/
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+.env
+
+# PII scan config (contains confidential terms — use .pii-terms.example.json as template)
+scripts/.pii-terms.json
+
+# MkDocs build artifacts
+_docs/
+_site/
+_serve/
+
+# Scrubbing scripts (one-time migration, not for public repo)
+scripts/scrub-kb.py

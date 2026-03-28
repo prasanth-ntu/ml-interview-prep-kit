@@ -1,0 +1,121 @@
+site_name: ML Interview Prep Kit
+site_url: https://interview.prasanth.io/docs/
+site_description: A comprehensive, open-source toolkit for ML/AI/Data Science interview preparation
+repo_url: https://github.com/prasanth-ntu/ml-interview-prep-kit
+repo_name: prasanth-ntu/ml-interview-prep-kit
+
+docs_dir: _docs
+site_dir: _site
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  features:
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+
+nav:
+  - Home: index.md
+  - Knowledge Base:
+    - ML/AI/DS Fundamentals: knowledge-base/ml-ds-llm-fundamentals.md
+    - System Design Scenarios: knowledge-base/scenarios.md
+    - SQL Fundamentals: knowledge-base/sql-fundamentals.md
+  - System Design:
+    - Interview Framework: system-design/template.md
+    - "RAG Customer Support": system-design/rag-customer-support.md
+  - Coding Practice:
+    - Overview: coding-practice/README.md
+    - Topics:
+      - Arrays & Strings: coding-practice/by-topic/arrays-strings.md
+      - Dynamic Programming: coding-practice/by-topic/dynamic-programming.md
+      - Trees & Graphs: coding-practice/by-topic/trees-graphs.md
+      - Linked Lists: coding-practice/by-topic/linked-lists.md
+      - Sorting & Searching: coding-practice/by-topic/sorting-searching.md
+      - Math & Statistics: coding-practice/by-topic/math-statistics.md
+  - Interview Tracking:
+    - Overview: interview-tracking/README.md
+    - Structure Guide: interview-tracking/_structure-guide.md
+  - Career Frameworks:
+    - Offer Decision Matrix: career-frameworks/offer-decision-matrix.md
+    - Negotiation Strategy: career-frameworks/negotiation-strategy.md
+    - STAR Stories Guide: career-frameworks/star-stories-guide.md
+    - Strategy Template: career-frameworks/strategy-template.md
+  - Case Study: project-case-study/ml-prediction-marketplace.md
+  - Prompt Templates:
+    - Overview: prompt-templates/README.md
+    - Interview Debrief: prompt-templates/interview-debrief.md
+    - Prep Drill Session: prompt-templates/interview-prep-drill.md
+    - Setup Interview Round: prompt-templates/setup-interview-round.md
+    - New Company Setup: prompt-templates/new-company-setup.md
+    - Add Knowledge Topic: prompt-templates/add-knowledge-topic.md
+    - Check Broken Links: prompt-templates/check-broken-links.md
+  - Contributing: CONTRIBUTING.md
+
+plugins:
+  - search
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - attr_list
+  - md_in_html
+  - def_list
+
+extra_javascript:
+  - docs-assets/js/map-links.js
+  - docs-assets/js/kb-toc.js
+  - docs-assets/js/theme-sync.js
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/prasanth-ntu/ml-interview-prep-kit

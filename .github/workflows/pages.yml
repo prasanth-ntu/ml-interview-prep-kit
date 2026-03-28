@@ -1,0 +1,72 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install MkDocs Material
+        run: pip install mkdocs-material
+
+      - name: Stage docs content
+        run: |
+          mkdir -p _docs
+          for dir in knowledge-base coding-practice system-design interview-tracking career-frameworks project-case-study prompt-templates; do
+            [ -d "$dir" ] && cp -r "$dir" _docs/
+          done
+          cp README.md _docs/index.md
+          cp CONTRIBUTING.md _docs/CONTRIBUTING.md
+          [ -d docs-assets ] && cp -r docs-assets _docs/docs-assets
+
+      - name: Build MkDocs
+        run: mkdocs build
+
+      - name: Assemble site
+        run: |
+          # Create final deploy directory
+          mkdir -p _deploy/docs
+
+          # Mind map landing page at root
+          cp index.html _deploy/
+          cp ml-knowledge-map-data.js _deploy/
+          cp CNAME _deploy/
+
+          # MkDocs docs site at /docs/
+          cp -r _site/* _deploy/docs/
+
+      - uses: actions/configure-pages@v4
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_deploy'
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

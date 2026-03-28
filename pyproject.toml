@@ -1,0 +1,11 @@
+[project]
+name = "ml-interview-prep-kit"
+version = "1.0.0"
+description = "A comprehensive toolkit for ML/AI/Data Science interview preparation"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
