@@ -55,14 +55,14 @@ Staging:  deploy → smoke test → load test (production QPS, P99 < SLA)
 Prod:     canary (5%) → monitor 30 min → rolling to 100%
 ```
 
-> Deep-dive: [CI/CD & MLOps](ml-ds-llm-fundamentals.md#cicd--mlops-pipelines) | [Testing Pyramid](ml-ds-llm-fundamentals.md#testing-pyramid-for-ml-systems)
+> Deep-dive: [CI/CD & MLOps](ml-ds-llm-fundamentals.md#cicd-mlops-pipelines) | [Testing Pyramid](ml-ds-llm-fundamentals.md#testing-pyramid-for-ml-systems)
 
 **4. Serving Architecture**
 - Proxy + serving container pattern within each pod
 - HPA based on CPU utilization + request count (QPS)
 - Cold-start mitigation: `initialDelaySeconds`, minimum replica floor during peak hours
 
-> Deep-dive: [ML Serving Pod Architecture](ml-ds-llm-fundamentals.md#ml-serving-pod-architecture-proxy--serving-pattern) | [HPA](ml-ds-llm-fundamentals.md#horizontal-pod-autoscaler-hpa)
+> Deep-dive: [ML Serving Pod Architecture](ml-ds-llm-fundamentals.md#ml-serving-pod-architecture-proxy-serving-pattern) | [HPA](ml-ds-llm-fundamentals.md#horizontal-pod-autoscaler-hpa)
 
 **5. Monitoring (Three-Layer)**
 - Layer 1 — Real-time: QPS, P99, error rates (Datadog → Slack/PagerDuty)
@@ -74,7 +74,7 @@ Prod:     canary (5%) → monitor 30 min → rolling to 100%
 **6. Incident Response**
 - Alert → Assess (severity matrix) → **Mitigate first** → Resolve → Post-mortem
 
-> Deep-dive: [Incident Response](ml-ds-llm-fundamentals.md#incident-response--on-call-for-ml-systems) | [Deployment Strategies](ml-ds-llm-fundamentals.md#deployment-strategies)
+> Deep-dive: [Incident Response](ml-ds-llm-fundamentals.md#incident-response-on-call-for-ml-systems) | [Deployment Strategies](ml-ds-llm-fundamentals.md#deployment-strategies)
 
 ### Interview Answer Template
 
@@ -86,7 +86,7 @@ Prod:     canary (5%) → monitor 30 min → rolling to 100%
 |----------|-------------|
 | "How do you handle cold-start for ML pods?" | [HPA](ml-ds-llm-fundamentals.md#horizontal-pod-autoscaler-hpa) |
 | "What deployment strategy would you choose?" | [Deployment Strategies](ml-ds-llm-fundamentals.md#deployment-strategies) |
-| "How do you know when to retrain?" | [Data Drift](ml-ds-llm-fundamentals.md#data-drift--bias) |
+| "How do you know when to retrain?" | [Data Drift](ml-ds-llm-fundamentals.md#data-drift-bias) |
 | "How do you test ML pipelines?" | [Testing Pyramid](ml-ds-llm-fundamentals.md#testing-pyramid-for-ml-systems) |
 
 ### Ready-to-Speak Scripts
@@ -173,7 +173,7 @@ If asked to parse and analyze logs:
 
 #### Dockerfile for ML Model Serving
 
-> Full example with GPU variant and Docker Compose: [KB: Containerization](ml-ds-llm-fundamentals.md#container-security-docker--kubernetes)
+> Full example with GPU variant and Docker Compose: [KB: Containerization](ml-ds-llm-fundamentals.md#container-security-docker-kubernetes)
 
 **Key patterns for live coding:**
 - Multi-stage build: `builder` (install deps) → `runtime` (copy only what's needed)
@@ -228,7 +228,7 @@ L1: Infrastructure (monitoring, logging, guardrails, security)
 - **RAG for static knowledge**: Embed documents, retrieve relevant context
 - **LLM-as-Judge**: Cross-validate answers for high-stakes queries
 
-> Deep-dive: [RAG Pipeline](ml-ds-llm-fundamentals.md#rag-pipeline--architecture) | [Tool Calling](ml-ds-llm-fundamentals.md#tool-calling-function-calling)
+> Deep-dive: [RAG Pipeline](ml-ds-llm-fundamentals.md#rag-pipeline-architecture) | [Tool Calling](ml-ds-llm-fundamentals.md#tool-calling-function-calling)
 
 **4. Guardrails**
 - Input validation (prompt injection defense)
@@ -295,14 +295,14 @@ Build a real-time anomaly detection pipeline for financial transactions. Must ha
 - Feature importance dashboard for analysts
 - Audit trail for regulatory review
 
-> Deep-dive: [SHAP](ml-ds-llm-fundamentals.md#shap-shapley-additive-explanations) | [Model Interpretability](ml-ds-llm-fundamentals.md#model-interpretability--explainability)
+> Deep-dive: [SHAP](ml-ds-llm-fundamentals.md#shap-shapley-additive-explanations) | [Model Interpretability](ml-ds-llm-fundamentals.md#model-interpretability-explainability)
 
 **5. Deployment & Monitoring**
 - Feature store with online (real-time lookup) + offline (training) stores
 - Circuit breaker: if model is slow, fall back to rule-based filter
 - Monitor: prediction distribution shifts, false positive rates, feature drift
 
-> Deep-dive: [Circuit Breaker](ml-ds-llm-fundamentals.md#circuit-breaker-pattern) | [Data Drift](ml-ds-llm-fundamentals.md#data-drift--bias)
+> Deep-dive: [Circuit Breaker](ml-ds-llm-fundamentals.md#circuit-breaker-pattern) | [Data Drift](ml-ds-llm-fundamentals.md#data-drift-bias)
 
 ### Interview Answer Template
 
@@ -428,7 +428,7 @@ Build an ML-based transaction monitoring system to replace/augment legacy rule-b
 - Multi-market: different regulations, typologies, risk profiles per jurisdiction
 - Governance: audit trails, model documentation, validation gates
 
-> Deep-dive: [Class Imbalance](ml-ds-llm-fundamentals.md#class-imbalance) | [Model Interpretability](ml-ds-llm-fundamentals.md#model-interpretability--explainability)
+> Deep-dive: [Class Imbalance](ml-ds-llm-fundamentals.md#class-imbalance) | [Model Interpretability](ml-ds-llm-fundamentals.md#model-interpretability-explainability)
 
 **2. Architecture (Rule → ML Transformation)**
 
@@ -510,7 +510,7 @@ Avoid ROC-AUC (misleading for extreme imbalance) and overall accuracy (99.9% by 
 | Question | KB Reference |
 |----------|-------------|
 | "How do you handle extreme class imbalance (0.1% positive)?" | [Class Imbalance](ml-ds-llm-fundamentals.md#class-imbalance) |
-| "How do you explain a GNN's decision to an auditor?" | [Model Interpretability](ml-ds-llm-fundamentals.md#model-interpretability--explainability) |
+| "How do you explain a GNN's decision to an auditor?" | [Model Interpretability](ml-ds-llm-fundamentals.md#model-interpretability-explainability) |
 | "How would you approach a typology with no historical labels?" | [Anomaly Detection](ml-ds-llm-fundamentals.md#anomaly-detection) |
 | "How do you reduce false positives without hurting recall?" | [Class Imbalance](ml-ds-llm-fundamentals.md#class-imbalance) |
 | "How would you use GenAI in AML?" | Cautious: investigator copilot (SAR narratives, rule generation) ✓, primary detection ✗ |

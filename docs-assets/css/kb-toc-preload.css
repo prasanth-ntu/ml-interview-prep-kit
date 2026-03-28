@@ -1,0 +1,7 @@
+/* Prevent flash of default TOC before custom TOC loads.
+   Loaded in <head> via extra_css — renders before body.
+   JS will remove this class after custom TOC is ready, or
+   immediately on non-KB pages. */
+.md-sidebar--secondary .md-sidebar__inner {
+  visibility: hidden;
+}

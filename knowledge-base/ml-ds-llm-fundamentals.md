@@ -13,13 +13,13 @@
 | [Bayesian Optimization](#bayesian-optimization) | | |
 | [Feature Engineering](#feature-engineering) | | |
 | [Class Imbalance](#class-imbalance) | | |
-| [Data Drift & Bias](#data-drift--bias) | | |
+| [Data Drift & Bias](#data-drift-bias) | | |
 
 | Deep Learning | NLP & LLMs | Dimensionality Reduction |
 |---------------|------------|------------------------|
-| [MLP](#multi-layer-perceptron-mlp) | [Transformer Architecture](#transformer-architecture) | [Covariance & Correlation](#covariance--correlation) |
+| [MLP](#multi-layer-perceptron-mlp) | [Transformer Architecture](#transformer-architecture) | [Covariance & Correlation](#covariance-correlation) |
 | [Activation Functions](#activation-functions) | [Tokenization](#tokenization) | [PCA](#pca) |
-| [Deep Neural Networks](#deep-neural-networks-dnn) | [Temperature & Sampling](#temperature--sampling) | [LDA](#lda-linear-discriminant-analysis) |
+| [Deep Neural Networks](#deep-neural-networks-dnn) | [Temperature & Sampling](#temperature-sampling) | [LDA](#lda-linear-discriminant-analysis) |
 | [CNN](#convolutional-neural-networks-cnn) | [Context Engineering](#context-engineering) | [SVD](#svd) |
 | [RNN](#recurrent-neural-networks-rnn) | [NLP Feature Extraction](#nlp-feature-extraction-traditional) | |
 | [CNN vs RNN](#cnn-vs-rnn-comparison) | [LLM Hallucination](#llm-hallucination) | |
@@ -28,34 +28,34 @@
 | LLM Training & Fine-Tuning |
 |---------------------------|
 | [Prompt Engineering vs Fine-tuning](#prompt-engineering-vs-fine-tuning) |
-| [LoRA / PEFT](#lora--parameter-efficient-fine-tuning-peft) |
+| [LoRA / PEFT](#lora-parameter-efficient-fine-tuning-peft) |
 | [Fine-tuning Decision Framework](#llm-fine-tuning-decision-framework) |
-| [Continued Pretraining](#continued-pretraining--domain-adaptation) |
-| [RLHF & Preference Optimization](#rlhf--preference-optimization) |
+| [Continued Pretraining](#continued-pretraining-domain-adaptation) |
+| [RLHF & Preference Optimization](#rlhf-preference-optimization) |
 | [Transformer Memory Optimization](#transformer-memory-optimization) |
 
 | Security & Trust | MLOps & Infrastructure |
 |------------------|------------------------|
-| [Container Security (Docker & K8s)](#container-security-docker--kubernetes) | [CI/CD & MLOps Pipelines](#cicd--mlops-pipelines) (incl. [5-Layer Stack](#ml-deployment-stack-5-layer-model)) |
-| [Model Security](#model-security) | [Data Privacy & Compliance](#data-privacy--compliance) |
+| [Container Security (Docker & K8s)](#container-security-docker-kubernetes) | [CI/CD & MLOps Pipelines](#cicd-mlops-pipelines) (incl. [5-Layer Stack](#ml-deployment-stack-5-layer-model)) |
+| [Model Security](#model-security) | [Data Privacy & Compliance](#data-privacy-compliance-gdpr-pdpa-ccpa) |
 | [API Security](#api-security) | [Secrets Management](#secrets-management) |
 | [Federated Learning Security](#federated-learning-security) | [Testing Pyramid](#testing-pyramid-for-ml-systems) |
-| [Model Watermarking & IP Protection](#model-watermarking--ip-protection) | [Load Testing](#load-testing--performance-validation) |
+| [Model Watermarking & IP Protection](#model-watermarking-ip-protection) | [Load Testing](#load-testing-performance-validation) |
 | | [Latency Percentiles](#latency-percentiles-p50p95p99) |
 | | [Deployment Strategies](#deployment-strategies) |
-| | [Experimentation Platforms & Feature Flags](#experimentation-platforms--feature-flags) |
-| | [Incident Response](#incident-response--on-call-for-ml-systems) |
+| | [Experimentation Platforms & Feature Flags](#experimentation-platforms-feature-flags) |
+| | [Incident Response](#incident-response-on-call-for-ml-systems) |
 | | [HPA & Autoscaling](#horizontal-pod-autoscaler-hpa) |
-| | [ML Serving Pod Architecture](#ml-serving-pod-architecture-proxy--serving-pattern) |
+| | [ML Serving Pod Architecture](#ml-serving-pod-architecture-proxy-serving-pattern) |
 | | [Three-Layer Monitoring](#three-layer-monitoring-architecture) |
 
 | Agentic AI & LLM Orchestration | RAG & Retrieval |
 |-------------------------------|-----------------|
-| [Agentic Pipeline Architecture](#agentic-pipeline-architecture) | [RAG Pipeline & Architecture](#rag-pipeline--architecture) |
+| [Agentic Pipeline Architecture](#agentic-pipeline-architecture) | [RAG Pipeline & Architecture](#rag-pipeline-architecture) |
 | [LangGraph](#langgraph) | |
 | [CrewAI](#crewai) | [Databases Overview](#databases-overview-for-ml-systems) |
 | [Tool Calling](#tool-calling-function-calling) | [Vector Databases](#vector-databases) |
-| [AI Agent Protocols (MCP & A2A)](#ai-agent-protocols-mcp--a2a) | [Reranking & Hybrid Search](#reranking--hybrid-search) |
+| [AI Agent Protocols (MCP & A2A)](#ai-agent-protocols-mcp-a2a) | [Reranking & Hybrid Search](#reranking-hybrid-search) |
 | [Guardrails Frameworks](#guardrails-frameworks) | [RAG Evaluation Metrics](#rag-evaluation-metrics) |
 | [LangChain Core](#langchain-core-concepts) | |
 | [Feedback Loops for Agentic Systems](#feedback-loops-for-agentic-systems) | |
@@ -68,11 +68,11 @@
 | | | [Reinforcement Learning](#reinforcement-learning) |
 | | | [Time Series Forecasting](#time-series-forecasting) |
 | | | [Anomaly Detection](#anomaly-detection) |
-| | | [Graph Analytics](#graph-analytics--network-analysis) |
+| | | [Graph Analytics](#graph-analytics-network-analysis) |
 | | | [Feature Stores](#feature-stores) |
-| | | [Model Interpretability](#model-interpretability--explainability) |
+| | | [Model Interpretability](#model-interpretability-explainability) |
 | | | [Cardinality](#cardinality) |
-| | | [Unicode & Encoding](#unicode--character-encoding) |
+| | | [Unicode & Encoding](#unicode-character-encoding) |
 | | | [Software Engineering Principles](#software-engineering-principles) |
 | | | [Circuit Breaker Pattern](#circuit-breaker-pattern) |
 | | | [Python for ML Engineers](#python-for-ml-engineers) |
@@ -137,7 +137,7 @@ children:
 3. **Preference Tuning (RLHF/DPO)**: Optimize for human-preferred outputs
 4. **Deployment**: RAG, tool use, guardrails, monitoring
 
-> 📖 **See also**: [RLHF & Preference Optimization](#rlhf--preference-optimization) for detailed coverage of stage 3.
+> 📖 **See also**: [RLHF & Preference Optimization](#rlhf-preference-optimization) for detailed coverage of stage 3.
 
 **Interview Answer Template:**
 > *"Machine learning has 5 main paradigms. Supervised learning uses labeled data to predict outputs—classification or regression. Unsupervised learning finds patterns without labels, like clustering. Self-supervised learning, used in LLM pretraining, creates targets from the data itself—GPT predicts the next token, BERT predicts masked tokens. Semi-supervised combines small labeled data with large unlabeled data using techniques like pseudo-labeling. Reinforcement learning learns through trial and reward, used in games and RLHF for aligning LLMs. Modern LLMs typically combine self-supervised pretraining, supervised fine-tuning, and RLHF alignment."*
@@ -245,7 +245,7 @@ children:
 
 **Q: RLHF vs SFT vs DPO?**
 
-> 📖 **Deep dive**: See [RLHF & Preference Optimization](#rlhf--preference-optimization) for detailed comparison of RLHF, DPO, GRPO, and when to use each.
+> 📖 **Deep dive**: See [RLHF & Preference Optimization](#rlhf-preference-optimization) for detailed comparison of RLHF, DPO, GRPO, and when to use each.
 
 **Q: When should you NOT use RL?**
 - If you can frame it as supervised learning
@@ -5375,7 +5375,7 @@ The Q·K similarity determines *how much* of each V to pull in.
 | `W_1` | FFN up-projection | Shape: (d_model, d_ff) |
 | `W_2` | FFN down-projection | Shape: (d_ff, d_model) |
 
-*‡ Why "up" and "down" projection in FFN?* The FFN follows an **expand → activate → contract** pattern: W_1 expands from d_model to d_ff (e.g., 4096 → 11008), applies ReLU/GELU non-linearity, then W_2 contracts back to d_model. The expansion allows learning richer representations; the contraction ensures output matches input shape for residual addition. This is also a common target for [LoRA fine-tuning](#lora--parameter-efficient-fine-tuning-peft).
+*‡ Why "up" and "down" projection in FFN?* The FFN follows an **expand → activate → contract** pattern: W_1 expands from d_model to d_ff (e.g., 4096 → 11008), applies ReLU/GELU non-linearity, then W_2 contracts back to d_model. The expansion allows learning richer representations; the contraction ensures output matches input shape for residual addition. This is also a common target for [LoRA fine-tuning](#lora-parameter-efficient-fine-tuning-peft).
 
 *† Why "d_k" not "d_qkv"? The subscript `k` is historical — the original "Attention Is All You Need" paper distinguished `d_k` (keys) and `d_v` (values). In practice, most implementations set `d_k = d_v = d_model / h`, so a single `d_k` covers Q, K, and V equally.*
 
@@ -7487,6 +7487,8 @@ lora_config = LoraConfig(
 
 model = get_peft_model(base_model, lora_config)
 print(f"Trainable params: {model.num_parameters(only_trainable=True):,}")
+```
+
 ## LLM Fine-tuning Decision Framework
 
 **One-liner**: Choosing between prompting, RAG, and fine-tuning depends on data availability, task complexity, and latency requirements — fine-tuning is rarely the first choice but becomes essential when prompting hits its limits.
@@ -7692,7 +7694,6 @@ Their product approximates the 5×5 weight update!
 
 Multiply your training data by generating variants with different signal combinations:
 
-```python
 ## Continued Pretraining / Domain Adaptation
 
 **One-liner**: Continued pretraining extends a pretrained model's training on domain-specific unlabeled data using the original objective (e.g., MLM, next-token), improving downstream task performance without labeled data.
@@ -8210,7 +8211,7 @@ children:
 
 **One-liner:** PCA finds the orthogonal directions (eigenvectors of the covariance matrix) where data varies most and projects onto fewer dimensions.
 
-> 📖 **Prerequisite:** [Covariance & Correlation](#covariance--correlation) explains the covariance matrix and why variance matters.
+> 📖 **Prerequisite:** [Covariance & Correlation](#covariance-correlation) explains the covariance matrix and why variance matters.
 
 ## Eigenvector vs Eigenvalue
 
@@ -9832,7 +9833,7 @@ children:
 
 **One-liner**: An agent learns to make sequential decisions by interacting with an environment, receiving rewards/penalties, and optimizing for maximum cumulative reward over time.
 
-> 📖 **See also:** [Types of Machine Learning](#types-of-machine-learning) for how RL fits into the ML landscape, and [RLHF](#rlhf--preference-optimization) for RL applied to LLM alignment.
+> 📖 **See also:** [Types of Machine Learning](#types-of-machine-learning) for how RL fits into the ML landscape, and [RLHF](#rlhf-preference-optimization) for RL applied to LLM alignment.
 
 ## Core Concepts
 
@@ -10115,7 +10116,7 @@ PSI (Population Stability Index) is widely used for **classification** drift —
 
 ### PSI: Why It Works for Classification but Fails for Forecasting
 
-**How PSI works mechanically** (→ [full PSI formula + worked example](#drift-detection--monitoring)):
+**How PSI works mechanically** (→ [full PSI formula + worked example](#drift-detection-monitoring)):
 1. **Bin** values into buckets (e.g., deciles)
 2. **Compute %** of records in each bin for expected (training) vs. actual (production)
 3. **Compare**: $PSI = \sum (Actual\% - Expected\%) \times \ln\left(\frac{Actual\%}{Expected\%}\right)$
@@ -11606,9 +11607,9 @@ Specialized/in-house tools provide: automatic drift detection (PSI, KS-test), fe
 | Stage | Deep-Dive Section | Key Concepts |
 |-------|-------------------|--------------|
 | Offline evaluation | [Cross-Validation](#cross-validation) | k-fold, time-series CV, stratified CV |
-| Shadow testing | [ML Serving Pod Architecture](#ml-serving-pod-architecture-proxy--serving-pattern) | Proxy layer mirrors traffic to S3 for offline comparison |
+| Shadow testing | [ML Serving Pod Architecture](#ml-serving-pod-architecture-proxy-serving-pattern) | Proxy layer mirrors traffic to S3 for offline comparison |
 | Online experiment | [A/B Testing](#ab-testing) | Statistical significance, MDE, p-value, confidence intervals |
-| Promotion & flags | [Experimentation Platforms & Feature Flags](#experimentation-platforms--feature-flags) | Gradual rollout, experiment flags vs. feature flags |
+| Promotion & flags | [Experimentation Platforms & Feature Flags](#experimentation-platforms-feature-flags) | Gradual rollout, experiment flags vs. feature flags |
 
 > [!TIP] **Interview framing**: "Between training and deployment, we run a staged promotion gate. First, offline evaluation with time-based splits and backtesting — this is cheap and fast. If metrics beat the current model, we move to shadow testing: deploy alongside production, mirror live traffic, compare outputs with zero user impact. If no regression, we run a canary A/B test at 5% traffic measuring business metrics, not just ML metrics. Only after statistical significance do we promote. For high-stakes models, there's a human review gate. This staged approach catches issues early — most bad models fail at stage 1 and never touch production."
 
@@ -11666,10 +11667,10 @@ Specialized/in-house tools provide: automatic drift detection (PSI, KS-test), fe
 | Layer | Concern | Key Tools | Deep-Dive |
 |-------|---------|-----------|-----------|
 | **L5** Orchestration | Pipeline scheduling, data flow, retraining triggers | Airflow, Anemoi | [ML Pipeline Orchestration](#ml-pipeline-orchestration) |
-| **L4** Model Registry | Version tracking (code + data + model + config) | MLflow, W&B | [Model Registry & Versioning](#model-registry--versioning) |
-| **L3** Containerization | Reproducible packaging, image optimization | Docker, ECR, ServiceDeploy/ModelServe | [Container Security](#container-security-docker--kubernetes) |
-| **L2** Deployment | Autoscaling, traffic management, canary releases | Kubernetes, HPA | [HPA](#horizontal-pod-autoscaler-hpa), [Deploy Strategies](#deployment-strategies), [Pod Architecture](#ml-serving-pod-architecture-proxy--serving-pattern) |
-| **L1** Monitoring | Real-time + batch health, incident response | Datadog, Grafana, Splunk | [Three-Layer Monitoring](#three-layer-monitoring-architecture), [Incident Response](#incident-response--on-call-for-ml-systems) |
+| **L4** Model Registry | Version tracking (code + data + model + config) | MLflow, W&B | [Model Registry & Versioning](#model-registry-versioning) |
+| **L3** Containerization | Reproducible packaging, image optimization | Docker, ECR, ServiceDeploy/ModelServe | [Container Security](#container-security-docker-kubernetes) |
+| **L2** Deployment | Autoscaling, traffic management, canary releases | Kubernetes, HPA | [HPA](#horizontal-pod-autoscaler-hpa), [Deploy Strategies](#deployment-strategies), [Pod Architecture](#ml-serving-pod-architecture-proxy-serving-pattern) |
+| **L1** Monitoring | Real-time + batch health, incident response | Datadog, Grafana, Splunk | [Three-Layer Monitoring](#three-layer-monitoring-architecture), [Incident Response](#incident-response-on-call-for-ml-systems) |
 
 > [!TIP] **Interview phrasing**: "I think of ML deployment as a 5-layer stack. Orchestration at the top with Airflow, then model registry for versioning, containerization for packaging, Kubernetes for serving with autoscaling, and monitoring + incident response at the foundation. Each layer has different concerns and tools, but they form a closed loop — when monitoring detects drift, it triggers retraining back at the orchestration layer."
 
@@ -14494,7 +14495,7 @@ When a Dockerfile compromise is detected:
 - [ ] Secrets managed via K8s Secrets or external vaults (Vault, AWS Secrets Manager)
 - [ ] Image signing with Cosign/Notary for supply chain verification
 
-> 📖 **See also**: [Secrets Management](#secrets-management) for K8s secrets best practices, [Data Privacy & Compliance](#data-privacy--compliance) for PII handling in containers.
+> 📖 **See also**: [Secrets Management](#secrets-management) for K8s secrets best practices, [Data Privacy & Compliance](#data-privacy-compliance-gdpr-pdpa-ccpa) for PII handling in containers.
 
 ---
 
@@ -15046,7 +15047,7 @@ def model_inversion_attack(model, target_class, num_steps=1000):
 - [ ] **Model inversion**: Round outputs, limit API access to high-risk models
 - [ ] **Red team testing**: Hire security researchers to attempt attacks before deployment
 
-> 📖 **See also**: [Data Privacy & Compliance](#data-privacy--compliance) for differential privacy implementation details.
+> 📖 **See also**: [Data Privacy & Compliance](#data-privacy-compliance-gdpr-pdpa-ccpa) for differential privacy implementation details.
 
 ---
 
@@ -15708,7 +15709,7 @@ log_security_event("jailbreak_attempt", {
 - [ ] Incident response plan
 - [ ] Regular security audits
 
-> 📖 **See also**: [Guardrails Frameworks](#guardrails-frameworks) for detailed LLM guardrail implementation, [Container Security](#container-security-docker--kubernetes) for deployment security.
+> 📖 **See also**: [Guardrails Frameworks](#guardrails-frameworks) for detailed LLM guardrail implementation, [Container Security](#container-security-docker-kubernetes) for deployment security.
 
 ---
 
@@ -16099,7 +16100,7 @@ def detect_backdoor_update(client_update, validation_set):
 - [ ] Client authentication (prevent Sybil attacks)
 - [ ] Rate limiting (prevent single client from dominating)
 
-> 📖 **See also**: [Data Privacy & Compliance](#data-privacy--compliance) for differential privacy implementation, [Model Security](#model-security) for backdoor detection techniques.
+> 📖 **See also**: [Data Privacy & Compliance](#data-privacy-compliance-gdpr-pdpa-ccpa) for differential privacy implementation, [Model Security](#model-security) for backdoor detection techniques.
 
 ---
 
@@ -16420,7 +16421,7 @@ children:
 
 **One-liner**: GDPR/PDPA compliance — lawful data collection, user rights, and ML-specific memorization challenges.
 
-> 📖 **This topic is covered in detail within [CI/CD & MLOps Pipelines](#cicd--mlops-pipelines)** under the privacy & compliance subsections. Key areas include:
+> 📖 **This topic is covered in detail within [CI/CD & MLOps Pipelines](#cicd-mlops-pipelines)** under the privacy & compliance subsections. Key areas include:
 > - PII detection with Presidio
 > - Differential privacy with DP-SGD (Opacus)
 > - GDPR/PDPA compliance (right to be forgotten, data lineage)
@@ -16442,12 +16443,12 @@ children:
 
 **One-liner**: Secure handling of API keys, credentials, and sensitive configuration in ML systems.
 
-> 📖 **This topic is covered in detail within [CI/CD & MLOps Pipelines](#cicd--mlops-pipelines)**. Key practices include:
+> 📖 **This topic is covered in detail within [CI/CD & MLOps Pipelines](#cicd-mlops-pipelines)**. Key practices include:
 > - Kubernetes Secrets (base64 encoded, RBAC-protected)
 > - External secret managers (AWS Secrets Manager, HashiCorp Vault, GCP Secret Manager)
 > - Environment variable injection vs file mounts
 > - Secret rotation strategies
-> - BuildKit secret mounts for Docker builds (see [Container Security](#container-security-docker--kubernetes))
+> - BuildKit secret mounts for Docker builds (see [Container Security](#container-security-docker-kubernetes))
 
 ---
 

@@ -101,11 +101,18 @@
       inner.innerHTML = html;
     }
 
-    // Inject styles
+    // Inject styles and reveal
     injectStyles();
+    showTOC();
 
     // Setup scroll spy
     setupScrollSpy(topics);
+  }
+
+  // Show the TOC sidebar (CSS hides it by default to prevent flash)
+  function showTOC() {
+    var inner = document.querySelector(".md-sidebar--secondary .md-sidebar__inner");
+    if (inner) inner.style.visibility = "visible";
   }
 
   function injectStyles() {
@@ -235,13 +242,20 @@
   }
 
   // MkDocs Material instant navigation support
+  // CSS hides TOC by default (prevents flash). JS shows it:
+  // - KB page: after building custom TOC (via buildCustomTOC → showTOC)
+  // - Other pages: immediately
+  function initTOC() {
+    if (isKBPage()) {
+      buildCustomTOC();
+    } else {
+      showTOC();
+    }
+  }
+
   if (typeof document$ !== "undefined") {
-    document$.subscribe(function () {
-      setTimeout(buildCustomTOC, 300);
-    });
+    document$.subscribe(initTOC);
   } else {
-    document.addEventListener("DOMContentLoaded", function () {
-      setTimeout(buildCustomTOC, 300);
-    });
+    document.addEventListener("DOMContentLoaded", initTOC);
   }
 })();
