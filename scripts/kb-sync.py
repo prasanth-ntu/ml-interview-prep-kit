@@ -24,6 +24,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 KB_FILE = REPO_ROOT / "knowledge-base" / "ml-ds-llm-fundamentals.md"
 OUTPUT_JS = REPO_ROOT / "ml-knowledge-map-data.js"  # Root for GitHub Pages
+OUTPUT_SLUGS_JS = REPO_ROOT / "docs-assets" / "js" / "map-slug-lookup.js"
 
 # --- Parsing ---
 
@@ -317,6 +318,115 @@ def clean_for_json(node: dict) -> dict:
     return cleaned
 
 
+def heading_to_mkdocs_slug(heading: str) -> str:
+    """Convert a markdown heading text to the slug MkDocs/toc would generate.
+
+    Replicates Python-Markdown toc extension's slugify (used by MkDocs Material):
+    lowercase → strip non-alphanum except hyphens/spaces → spaces to hyphens → collapse.
+    """
+    slug = heading.lower()
+    slug = re.sub(r"[^\w\s-]", "", slug)
+    slug = re.sub(r"[\s_]+", "-", slug)
+    slug = re.sub(r"-+", "-", slug)
+    slug = slug.strip("-")
+    return slug
+
+
+def build_mkdocs_slug_map(text: str, topics: list[dict]) -> dict[str, str]:
+    """Build heading → actual MkDocs slug map, accounting for duplicate IDs.
+
+    MkDocs/toc appends _1, _2 etc. for duplicate slugs. We replicate this by
+    scanning ALL headings (H1-H6) in document order to track slug collisions.
+
+    To handle code blocks: we use a heuristic based on the structure of this
+    specific markdown file — @mindmap topics are always H1 headings outside
+    code blocks, while Python comments (#) inside code blocks are not headings.
+    We track all H2-H6 subheadings that appear between @mindmap H1s as
+    legitimate heading-generators for slug dedup purposes.
+    """
+    # Strategy: walk through the file, identify all headings that MkDocs would
+    # render (i.e., NOT inside code blocks), track slug counts, and map each
+    # @mindmap topic heading to its actual slug.
+    #
+    # Since perfect code-block tracking in raw markdown is fragile (unbalanced
+    # fences, indented code, etc.), we use a structural heuristic:
+    # - H1 headings with @mindmap blocks are always real headings
+    # - H2-H6 headings between two @mindmap H1s are real subheadings
+    # - We don't need to track H1s without @mindmap (they're rare)
+
+    # First pass: find line numbers of all @mindmap topic H1 headings
+    topic_lines = set()
+    heading_pattern = re.compile(r"^# (.+)$", re.MULTILINE)
+    for m in heading_pattern.finditer(text):
+        line_num = text[:m.start()].count("\n") + 1
+        heading = m.group(1).strip()
+        # Check if this heading has a corresponding @mindmap topic
+        for topic in topics:
+            if topic["heading"] == heading:
+                topic_lines.add(line_num)
+                break
+
+    # Second pass: collect ALL headings in document order, skip code blocks
+    # Use a conservative heuristic: track backtick fences, but if we detect
+    # an @mindmap H1 while "in code", force-reset (the content is authoritative)
+    lines = text.splitlines()
+    slug_counts: dict[str, int] = {}
+    heading_to_slug: dict[int, str] = {}  # line_num → slug
+
+    in_code = False
+    open_fence_len = 0
+
+    for i, line in enumerate(lines, 1):
+        stripped = line.strip()
+
+        # Fence tracking
+        m = re.match(r"^(`{3,}|~{3,})", stripped)
+        if m:
+            fence_len = len(m.group(1))
+            if not in_code:
+                # Opening fence must have >= 3 chars and may have info string
+                in_code = True
+                open_fence_len = fence_len
+            elif fence_len >= open_fence_len and re.match(r"^(`{3,}|~{3,})\s*$", stripped):
+                # Closing fence: same char type, no trailing text
+                in_code = False
+            continue
+
+        # Force-reset if we hit a known @mindmap H1 while "in code"
+        # This handles cases where fence tracking drifted
+        if in_code and i in topic_lines:
+            in_code = False
+
+        if in_code:
+            continue
+
+        # Check for heading
+        hm = re.match(r"^(#{1,6})\s+(.+)$", stripped)
+        if not hm:
+            continue
+
+        heading_text = hm.group(2).strip()
+        base_slug = heading_to_mkdocs_slug(heading_text)
+        count = slug_counts.get(base_slug, 0)
+        actual_slug = base_slug if count == 0 else f"{base_slug}_{count}"
+        slug_counts[base_slug] = count + 1
+        heading_to_slug[i] = actual_slug
+
+    # Map @mindmap topics to their slugs
+    result = {}
+    topic_line_map = {}
+    for m in heading_pattern.finditer(text):
+        line_num = text[:m.start()].count("\n") + 1
+        topic_line_map[m.group(1).strip()] = line_num
+
+    for topic in topics:
+        line_num = topic_line_map.get(topic["heading"])
+        if line_num and line_num in heading_to_slug:
+            result[topic["heading"]] = heading_to_slug[line_num]
+
+    return result
+
+
 def generate_js(tree: dict) -> str:
     """Generate JavaScript file content from tree."""
     cleaned = clean_for_json(tree)
@@ -326,6 +436,32 @@ def generate_js(tree: dict) -> str:
         "// AUTO-GENERATED by scripts/kb-sync.py from ml-ds-llm-fundamentals.md\n"
         "// Do not edit manually. Run: make kb-sync\n"
         f"const knowledgeMapData = {json_str};\n"
+    )
+
+
+def generate_slug_lookup_js(topics: list[dict], heading_slugs: dict[str, str]) -> str:
+    """Generate slug ↔ node name lookup tables for docs ↔ mind map navigation.
+
+    Two tables:
+      mapSlugLookup:  heading-slug → node name (used by docs 🧠 links)
+      mapNodeToSlug:  node name → heading-slug (used by mind map "Open in Docs")
+    """
+    slug_to_name = {}
+    name_to_slug = {}
+    for topic in topics:
+        slug = heading_slugs.get(topic["heading"])
+        if not slug:
+            continue
+        slug_to_name[slug] = topic["name"]
+        name_to_slug[topic["name"]] = slug
+
+    slug_json = json.dumps(slug_to_name, indent=2, ensure_ascii=False)
+    node_json = json.dumps(name_to_slug, indent=2, ensure_ascii=False)
+    return (
+        "// AUTO-GENERATED by scripts/kb-sync.py — bidirectional slug ↔ node name lookup\n"
+        "// Do not edit manually. Run: make kb-sync\n"
+        f"const mapSlugLookup = {slug_json};\n"
+        f"const mapNodeToSlug = {node_json};\n"
     )
 
 
@@ -382,6 +518,13 @@ def main():
 
     OUTPUT_JS.write_text(js_content, encoding="utf-8")
     print(f"Generated {OUTPUT_JS.relative_to(REPO_ROOT)} ({node_count} nodes)")
+
+    # Generate slug ↔ node name lookup for docs ↔ mind map navigation
+    heading_slugs = build_mkdocs_slug_map(text, topics)
+    slug_js = generate_slug_lookup_js(topics, heading_slugs)
+    OUTPUT_SLUGS_JS.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT_SLUGS_JS.write_text(slug_js, encoding="utf-8")
+    print(f"Generated {OUTPUT_SLUGS_JS.relative_to(REPO_ROOT)} ({len(topics)} slugs)")
 
     return 0
 

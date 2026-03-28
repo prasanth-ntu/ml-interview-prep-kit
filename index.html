@@ -499,6 +499,7 @@
   <div class="minimap hidden" id="minimap"></div>
 
   <script src="ml-knowledge-map-data.js"></script>
+  <script src="docs-assets/js/map-slug-lookup.js"></script>
   <script>
     const data = knowledgeMapData;
 
@@ -601,6 +602,8 @@
     let hideTooltipTimeout = null;
 
     function nodeToDocSlug(name) {
+      // Use build-time lookup if available, fallback to heuristic
+      if (typeof mapNodeToSlug !== 'undefined' && mapNodeToSlug[name]) return mapNodeToSlug[name];
       return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
     }
 

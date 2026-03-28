@@ -189,6 +189,8 @@
 - Raw transcripts are static artifacts — never modify them
 - Analysis goes in the round file, not alongside the transcript
 
+> **Legal note:** Recording consent laws vary by jurisdiction (one-party vs. all-party consent). Many companies also prohibit interview recording regardless of local law. Always verify both before recording. When in doubt, ask the interviewer for permission or rely on post-interview notes.
+
 ---
 
 ### Decision 10: Link Management

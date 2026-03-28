@@ -9,8 +9,10 @@
 | **Interviewer** | Name — Title |
 | **Format** | Virtual / Onsite |
 | **LinkedIn** | [Profile](URL) |
-| **Transcript Source** | [R{n}-transcript-{source}.txt](../artifacts/R{n}-transcript-{source}.txt) |
+| **Transcript Source** | [R{n}-transcript-{source}.txt](../artifacts/R{n}-transcript-{source}.txt) or _brain dump below_ ⚠️ See note |
 | **Status** | 🟡 Scheduled |
+
+> **Recording & Transcripts:** If using transcripts for post-interview review, ensure you comply with local recording consent laws and the company's interview policy. Many jurisdictions require all-party consent. When in doubt, ask the interviewer for permission or rely on post-interview notes instead.
 
 ---
 
@@ -40,12 +42,27 @@
 
 ## Interview Notes
 
+<!-- 💡 No transcript? Do a brain dump within 15-30 minutes of the interview.
+     Fill in the sections below while memory is fresh — this is enough for
+     LLM-assisted review using the Interview Debrief prompt template. -->
+
+### Questions Asked & My Responses
+<!-- For each question, capture: what was asked, how you answered, and how it landed -->
+- **Q:** {Question}
+  - **My answer:** {Key points you covered}
+  - **Reaction:** {Interviewer's response — follow-ups, nodding, pushback?}
+
 ### Sharing by Interviewer
 - {Team context, role details}
 - {Technical stack, challenges}
 
 ### Questions I Asked
 - {Question and response}
+
+### Where I Struggled
+<!-- Be honest — this is the most valuable part for LLM feedback -->
+- {Topic or question where you felt uncertain}
+- {Answer you wish you could redo}
 
 ### Key Insights
 - {Important information learned}

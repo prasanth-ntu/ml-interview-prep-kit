@@ -7732,7 +7732,6 @@ flowchart LR
 
 #### Implementation Details
 
-```python
 ## RLHF & Preference Optimization
 
 **One-liner**: RLHF (Reinforcement Learning from Human Feedback) aligns LLMs with human preferences by training a reward model on human comparisons, then using RL to optimize the LLM. Modern variants (DPO, GRPO) simplify this by eliminating the reward model.
@@ -8291,7 +8290,7 @@ $$C = \frac{1}{n-1} X^T X$$
 
 Where $X$ is your centered (mean-subtracted) data matrix.
 
-> 📖 **See also:** [Covariance vs Correlation](#covariance-vs-correlation) for a deeper explanation of what covariance means and how it differs from correlation.
+> 📖 **See also:** [Covariance vs Correlation](#covariance-vs-correlation-comparison) for a deeper explanation of what covariance means and how it differs from correlation.
 
 - **Diagonal entries:** Variance of each feature with itself
 - **Off-diagonal entries:** Covariance between pairs of features
@@ -10116,7 +10115,7 @@ PSI (Population Stability Index) is widely used for **classification** drift —
 
 ### PSI: Why It Works for Classification but Fails for Forecasting
 
-**How PSI works mechanically** (→ [full PSI formula + worked example](../../../../knowledge-base/ml-ds-llm-fundamentals.md#drift-detection--monitoring)):
+**How PSI works mechanically** (→ [full PSI formula + worked example](#drift-detection--monitoring)):
 1. **Bin** values into buckets (e.g., deciles)
 2. **Compute %** of records in each bin for expected (training) vs. actual (production)
 3. **Compare**: $PSI = \sum (Actual\% - Expected\%) \times \ln\left(\frac{Actual\%}{Expected\%}\right)$
@@ -23651,7 +23650,7 @@ children:
 
 <!-- # Topics to Expand — Stub entries below need full KB content. See CONTRIBUTING.md -->
 
-> **Note**: The following topics are stub entries referenced in the mind map. Contributions welcome — see [CONTRIBUTING.md](../../CONTRIBUTING.md) for how to expand them.
+> **Note**: The following topics are stub entries referenced in the mind map. Contributions welcome — see [CONTRIBUTING.md](../CONTRIBUTING.md) for how to expand them.
 
 ## NLP & LLMs - New Topics
 

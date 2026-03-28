@@ -28,6 +28,15 @@ done
 cp "$REPO_ROOT/README.md" "$DOCS_DIR/index.md"
 cp "$REPO_ROOT/CONTRIBUTING.md" "$DOCS_DIR/CONTRIBUTING.md"
 
+# Fix mind map links: absolute → relative (../), so they work in both local dev and production
+# README.md keeps absolute URLs for GitHub rendering; docs index.md needs relative paths
+sed -i '' 's|https://interview\.prasanth\.io)|../)|g' "$DOCS_DIR/index.md"
+sed -i '' 's|https://interview\.prasanth\.io|../|g' "$DOCS_DIR/index.md"
+
+# Fix lists/tables: insert blank line before lists and tables that follow a paragraph.
+# Python-Markdown requires this; most IDE previews (GFM) don't.
+python3 "$REPO_ROOT/scripts/fix-md-lists.py" "$DOCS_DIR"
+
 # Copy docs assets (custom JS/CSS for MkDocs)
 if [ -d "$REPO_ROOT/docs-assets" ]; then
   cp -r "$REPO_ROOT/docs-assets" "$DOCS_DIR/docs-assets"

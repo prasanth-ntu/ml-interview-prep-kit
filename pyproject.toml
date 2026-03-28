@@ -4,7 +4,13 @@ version = "1.0.0"
 description = "A comprehensive toolkit for ML/AI/Data Science interview preparation"
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = []
+dependencies = [
+    "mkdocs-exclude>=1.0.2",
+    "mkdocs-material>=9.7.6",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["scripts"]
 
 [build-system]
 requires = ["hatchling"]

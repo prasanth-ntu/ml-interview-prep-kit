@@ -106,11 +106,16 @@ markdown_extensions:
   - toc:
       permalink: true
       toc_depth: 3
+  - pymdownx.arithmatex:
+      generic: true
   - attr_list
   - md_in_html
   - def_list
 
 extra_javascript:
+  - docs-assets/js/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+  - docs-assets/js/map-slug-lookup.js
   - docs-assets/js/map-links.js
   - docs-assets/js/kb-toc.js
   - docs-assets/js/theme-sync.js
