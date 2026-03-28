@@ -154,12 +154,12 @@
     var ticking = false;
     var lastActiveTopicId = null;
 
-    // Build a flat list of all headings (H1s + H2s) with their positions
+    // Build a flat list of heading references (positions read live at scroll time)
     var allHeadings = [];
     for (var t = 0; t < topics.length; t++) {
-      allHeadings.push({ id: topics[t].id, type: "h1", topicId: topics[t].id, top: topics[t].top });
+      allHeadings.push({ id: topics[t].id, type: "h1", topicId: topics[t].id });
       for (var h = 0; h < topics[t].h2s.length; h++) {
-        allHeadings.push({ id: topics[t].h2s[h].id, type: "h2", topicId: topics[t].id, top: topics[t].h2s[h].top });
+        allHeadings.push({ id: topics[t].h2s[h].id, type: "h2", topicId: topics[t].id });
       }
     }
 
@@ -171,8 +171,10 @@
         var scrollTop = window.scrollY + 140;
         var currentHeading = allHeadings[0];
 
+        // Read positions live from DOM (MathJax/images may have shifted content)
         for (var i = allHeadings.length - 1; i >= 0; i--) {
-          if (scrollTop >= allHeadings[i].top) {
+          var el = document.getElementById(allHeadings[i].id);
+          if (el && scrollTop >= el.offsetTop) {
             currentHeading = allHeadings[i];
             break;
           }
