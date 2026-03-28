@@ -45,10 +45,12 @@ theme:
 nav:
   - Home: index.md
   - Knowledge Base:
+    - knowledge-base/index.md
     - ML/AI/DS Fundamentals: knowledge-base/ml-ds-llm-fundamentals.md
     - System Design Scenarios: knowledge-base/scenarios.md
     - SQL Fundamentals: knowledge-base/sql-fundamentals.md
   - System Design:
+    - system-design/index.md
     - Interview Framework: system-design/template.md
     - "RAG Customer Support": system-design/rag-customer-support.md
   - Coding Practice:
@@ -64,6 +66,7 @@ nav:
     - Overview: interview-tracking/README.md
     - Structure Guide: interview-tracking/_structure-guide.md
   - Career Frameworks:
+    - career-frameworks/index.md
     - Offer Decision Matrix: career-frameworks/offer-decision-matrix.md
     - Negotiation Strategy: career-frameworks/negotiation-strategy.md
     - STAR Stories Guide: career-frameworks/star-stories-guide.md
