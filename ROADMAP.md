@@ -57,12 +57,41 @@
   - Quartz: native Obsidian vault support, graph view, backlinks, wikilinks
   - Key question: does the team use Obsidian for authoring? If so, Quartz reduces friction
 
-### Reference Implementations
+### Reference Implementations & Competitive Research
 - [ ] Study [AI Engineering from Scratch](https://rohitg00.github.io/ai-engineering-from-scratch/) for inspiration on:
   - Content structure and topic organization
   - UI/UX patterns and navigation design
   - Codebase architecture and build system
   - Evaluate which patterns could improve this repo
+- [ ] Survey similar repos, platforms, websites, and tools in the ML/DS interview prep space
+  - Catalog what they do well (content depth, UX, interactivity, community, AI features)
+  - Identify gaps and opportunities we can differentiate on
+  - Draw inspiration across all aspects: content, design, architecture, engagement model
+
+### Architecture & Modularity Review
+- [ ] Audit the current repo architecture for modularity, scalability, extensibility, and collaboration-readiness
+  - Is the folder structure, build pipeline, and content model set up for easy contribution by others?
+  - Do we need formal data models (e.g., structured schemas for topics, progress, user state)?
+  - Should we adopt specific architectural principles or frameworks (e.g., component-based design, plugin architecture, monorepo tooling)?
+- [ ] Define a target architecture that is future-proof
+  - Separation of content, presentation, and logic layers
+  - Standardized data formats (JSON/YAML schemas for topics, metadata, progress)
+  - Clear extension points for new sections, tools, and integrations
+
+### AI Integration Strategy
+- [ ] Decide the core AI delivery model — this is a fundamental design question:
+  - **Local/agent mode**: Users clone the repo and use it with their own AI agents (Claude Code, Copilot, etc.) locally. Simpler to build, no hosting costs, full user control.
+  - **Web-hosted mode**: AI features embedded in the deployed website (chat, JD analysis, resume gen, adaptive quizzing). Requires hosting, backend infra, database, auth, and cost management.
+  - **Hybrid**: Static site for content + optional local AI workflows (prompt templates, agent configs) that users run on their own machines. Avoids hosting complexity while still being AI-native.
+- [ ] Evaluate trade-offs for each model:
+  - Web: editing, persistence, scalability, hosting costs, database needs, user auth
+  - Local: onboarding friction, dependency on user's local setup, harder to provide seamless UX
+  - Hybrid: best of both? Or worst of both?
+- [ ] If web-hosted AI features are pursued, scope the infra requirements:
+  - Backend (serverless functions vs. dedicated server)
+  - Database (user state, progress, generated content)
+  - API key management and cost controls
+  - Scalability and rate limiting
 
 ### Overview Prototypes
 - [ ] Pick a winning prototype (Bento Grid, Skill Tree, or Mission Control) or combine elements
