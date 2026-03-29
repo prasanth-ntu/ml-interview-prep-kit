@@ -40,6 +40,7 @@ serve: docs-build
 	@mkdir -p _serve/docs
 	@cp index.html ml-knowledge-map-data.js _serve/
 	@cp -r _site/* _serve/docs/
+	@cp -r overview-prototypes _serve/overview-prototypes
 	@echo "Serving at http://localhost:9000 (Ctrl+C to stop)"
 	@cd _serve && python -m http.server 9000 --bind 127.0.0.1
 

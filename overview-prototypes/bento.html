@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ML Interview Prep Kit — Overview</title>
+  <meta name="description" content="Your complete ML interview preparation toolkit — 104 topics, 6 system designs, coding practice, career frameworks, and AI workflows.">
+  <meta name="theme-color" content="#0f172a">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="ML Interview Prep Kit — Overview">
+  <meta property="og:description" content="Your complete ML interview preparation toolkit — 104 topics, 6 system designs, coding practice, career frameworks, and AI workflows.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://interview.prasanth.io/overview-bento.html">
+  <meta property="og:site_name" content="ML Interview Prep Kit">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ML Interview Prep Kit — Overview">
+  <meta name="twitter:description" content="Your complete ML interview preparation toolkit — 104 topics, 6 system designs, coding practice, career frameworks, and AI workflows.">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── Color Tokens ──────────────────────────────── */
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-tertiary: #f1f5f9;
+      --text-primary: #0f172a;
+      --text-secondary: #64748b;
+      --text-muted: #94a3b8;
+      --border-color: #e2e8f0;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --radius: 0.625rem;
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.5);
+      --hero-text: #0f172a;
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03);
+      --card-shadow-hover: 0 4px 16px rgba(0,0,0,0.08), 0 8px 32px rgba(0,0,0,0.06);
+      --nav-bg: rgba(248, 250, 252, 0.8);
+      --command-bg: rgba(255,255,255,0.95);
+      --command-item-hover: #f1f5f9;
+      --dot-color: rgba(0,0,0,0.04);
+      --kb-gradient: linear-gradient(135deg, #3b82f6, #6366f1);
+      --sd-gradient: linear-gradient(135deg, #8b5cf6, #a855f7);
+      --cp-gradient: linear-gradient(135deg, #10b981, #34d399);
+      --cf-gradient: linear-gradient(135deg, #f59e0b, #fbbf24);
+      --it-gradient: linear-gradient(135deg, #06b6d4, #22d3ee);
+      --pt-gradient: linear-gradient(135deg, #f43f5e, #fb7185);
+      --cs-gradient: linear-gradient(135deg, #059669, #34d399);
+    }
+    .dark {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border-color: #334155;
+      --accent: #3b82f6;
+      --accent-hover: #60a5fa;
+      --glass-bg: rgba(30, 41, 59, 0.7);
+      --glass-border: rgba(51, 65, 85, 0.5);
+      --hero-text: #f1f5f9;
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 4px 12px rgba(0,0,0,0.15);
+      --card-shadow-hover: 0 4px 16px rgba(0,0,0,0.3), 0 8px 32px rgba(0,0,0,0.2);
+      --nav-bg: rgba(15, 23, 42, 0.8);
+      --command-bg: rgba(30, 41, 59, 0.95);
+      --command-item-hover: #334155;
+      --dot-color: rgba(255,255,255,0.03);
+    }
+
+    /* ─── Reset & Base ──────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 1), color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── Dot Grid Background ───────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+    }
+
+    /* ─── Navigation ────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: var(--nav-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-color);
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .nav-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand {
+      font-weight: 700;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-link {
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+    .nav-link:hover { color: var(--text-primary); background: var(--bg-tertiary); }
+    .nav-link.active {
+      color: var(--accent);
+      background: rgba(59, 130, 246, 0.08);
+    }
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nav-icon-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .nav-icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .nav-icon-btn svg { width: 18px; height: 18px; }
+
+    /* ─── Hero ──────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px 80px;
+      overflow: hidden;
+    }
+    .hero-mesh {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 40%, rgba(59,130,246,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 30%, rgba(139,92,246,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 50% at 50% 80%, rgba(16,185,129,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 90% 90%, rgba(244,63,94,0.06) 0%, transparent 60%);
+      animation: meshMove 20s ease-in-out infinite alternate;
+    }
+    @keyframes meshMove {
+      0% { transform: scale(1) translate(0, 0); }
+      25% { transform: scale(1.05) translate(-10px, 15px); }
+      50% { transform: scale(1.02) translate(10px, -10px); }
+      75% { transform: scale(1.07) translate(-5px, -15px); }
+      100% { transform: scale(1) translate(5px, 10px); }
+    }
+    .dark .hero-mesh {
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 40%, rgba(59,130,246,0.15) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 80% 30%, rgba(139,92,246,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 50% at 50% 80%, rgba(16,185,129,0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 90% 90%, rgba(244,63,94,0.08) 0%, transparent 60%);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      max-width: 720px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: var(--hero-text);
+      margin-bottom: 20px;
+    }
+    .hero h1 span {
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6, #f43f5e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-tagline {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    /* Hero Stats */
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .hero-stat {
+      text-align: center;
+    }
+    .hero-stat-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+    .hero-stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+    }
+
+    /* Command hint */
+    .command-hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 12px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      font-size: 14px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .command-hint:hover {
+      border-color: var(--accent);
+      color: var(--text-primary);
+    }
+    .command-hint kbd {
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      font-weight: 600;
+    }
+
+    /* ─── Bento Grid ────────────────────────────────── */
+    .bento-section {
+      position: relative;
+      z-index: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    /* ─── Card Base ─────────────────────────────────── */
+    .bento-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 28px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--card-shadow);
+      position: relative;
+      overflow: hidden;
+      /* Reveal animation initial state */
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    @supports (backdrop-filter: blur(1px)) {
+      .bento-card {
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+      }
+    }
+    @supports not (backdrop-filter: blur(1px)) {
+      .bento-card {
+        background: var(--bg-secondary);
+      }
+    }
+    .bento-card.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .bento-card:hover {
+      transform: translateY(0) scale(1.02);
+      box-shadow: var(--card-shadow-hover);
+      border-color: var(--accent);
+    }
+    .bento-card.revealed:hover {
+      transform: scale(1.02);
+    }
+
+    /* Card accent stripe */
+    .bento-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      border-radius: 16px 16px 0 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .bento-card:hover::before { opacity: 1; }
+
+    /* Size variants */
+    .bento-card--large { grid-column: span 2; grid-row: span 2; }
+    .bento-card--medium { grid-column: span 1; grid-row: span 2; }
+
+    /* Card header */
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .card-header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+    .card-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+    }
+    .card-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      transition: gap 0.2s;
+      margin-top: auto;
+    }
+    .card-link:hover { gap: 10px; }
+    .card-link svg { width: 14px; height: 14px; }
+
+    /* ─── Pillar accent colors ──────────────────────── */
+    .card-kb::before { background: var(--kb-gradient); }
+    .card-kb .card-icon { background: linear-gradient(135deg, rgba(59,130,246,0.15), rgba(99,102,241,0.15)); color: #3b82f6; }
+    .card-sd::before { background: var(--sd-gradient); }
+    .card-sd .card-icon { background: linear-gradient(135deg, rgba(139,92,246,0.15), rgba(168,85,247,0.15)); color: #8b5cf6; }
+    .card-cp::before { background: var(--cp-gradient); }
+    .card-cp .card-icon { background: linear-gradient(135deg, rgba(16,185,129,0.15), rgba(52,211,153,0.15)); color: #10b981; }
+    .card-cf::before { background: var(--cf-gradient); }
+    .card-cf .card-icon { background: linear-gradient(135deg, rgba(245,158,11,0.15), rgba(251,191,36,0.15)); color: #f59e0b; }
+    .card-it::before { background: var(--it-gradient); }
+    .card-it .card-icon { background: linear-gradient(135deg, rgba(6,182,212,0.15), rgba(34,211,238,0.15)); color: #06b6d4; }
+    .card-pt::before { background: var(--pt-gradient); }
+    .card-pt .card-icon { background: linear-gradient(135deg, rgba(244,63,94,0.15), rgba(251,113,133,0.15)); color: #f43f5e; }
+    .card-cs::before { background: var(--cs-gradient); }
+    .card-cs .card-icon { background: linear-gradient(135deg, rgba(5,150,105,0.15), rgba(52,211,153,0.15)); color: #059669; }
+
+    /* ─── KB Mini Grid ──────────────────────────────── */
+    .kb-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .kb-cat {
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+    }
+    .kb-cat:hover {
+      border-color: #3b82f6;
+      background: rgba(59,130,246,0.06);
+    }
+    .kb-cat.expanded {
+      border-color: #3b82f6;
+      background: rgba(59,130,246,0.06);
+      grid-column: 1 / -1;
+    }
+    .kb-cat-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .kb-cat-badge {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: rgba(59,130,246,0.12);
+      color: #3b82f6;
+    }
+    .kb-cat-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+      display: none;
+    }
+    .kb-cat.expanded .kb-cat-desc { display: block; }
+    .kb-topics {
+      display: none;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border-color);
+    }
+    .kb-cat.expanded .kb-topics { display: block; }
+    .kb-topics-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .kb-topic {
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+      transition: all 0.15s;
+      cursor: default;
+    }
+    .kb-topic:hover { border-color: #6366f1; color: var(--text-primary); }
+
+    /* ─── Scenario / Item Cards ─────────────────────── */
+    .item-grid {
+      display: grid;
+      gap: 8px;
+    }
+    .item-card {
+      display: block;
+      padding: 14px 16px;
+      border-radius: 10px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .item-card:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+    .item-card-name {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .item-card-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* ─── Prompt chain flow ─────────────────────────── */
+    .prompt-chain {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .prompt-chain-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      transition: all 0.2s;
+    }
+    .prompt-chain-item:hover {
+      border-color: #f43f5e;
+      transform: translateX(4px);
+    }
+    .prompt-chain-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      background: rgba(244,63,94,0.12);
+      color: #f43f5e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .prompt-chain-text {
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .prompt-chain-desc {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ─── Case Study Accent ─────────────────────────── */
+    .case-study-visual {
+      margin-top: 12px;
+      padding: 16px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, rgba(5,150,105,0.08), rgba(52,211,153,0.08));
+      border: 1px solid rgba(5,150,105,0.15);
+    }
+    .case-study-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+    .case-study-tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(5,150,105,0.1);
+      color: #059669;
+      font-weight: 500;
+    }
+    .dark .case-study-tag { color: #34d399; }
+
+    /* ─── Footer ────────────────────────────────────── */
+    .footer {
+      position: relative;
+      z-index: 1;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 40px 24px;
+      border-top: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-left {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 20px;
+    }
+    .footer-link {
+      font-size: 14px;
+      color: var(--text-secondary);
+      transition: color 0.2s;
+    }
+    .footer-link:hover { color: var(--accent); }
+
+    /* ─── Command Palette ───────────────────────────── */
+    .command-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      display: none;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 20vh;
+    }
+    .command-overlay.open { display: flex; }
+    .command-palette {
+      width: 560px;
+      max-width: 90vw;
+      max-height: 60vh;
+      background: var(--command-bg);
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.2);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .command-input-wrap {
+      display: flex;
+      align-items: center;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color);
+      gap: 12px;
+    }
+    .command-input-wrap svg { width: 20px; height: 20px; color: var(--text-muted); flex-shrink: 0; }
+    .command-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      color: var(--text-primary);
+      outline: none;
+    }
+    .command-input::placeholder { color: var(--text-muted); }
+    .command-results {
+      overflow-y: auto;
+      padding: 8px;
+      flex: 1;
+    }
+    .command-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+    .command-item:hover, .command-item.active {
+      background: var(--command-item-hover);
+    }
+    .command-item-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+    .command-item-name {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .command-item-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-left: auto;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 200px;
+    }
+    .command-empty {
+      padding: 32px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Badge colors */
+    .badge-kb { background: rgba(59,130,246,0.12); color: #3b82f6; }
+    .badge-sd { background: rgba(139,92,246,0.12); color: #8b5cf6; }
+    .badge-cp { background: rgba(16,185,129,0.12); color: #10b981; }
+    .badge-cf { background: rgba(245,158,11,0.12); color: #f59e0b; }
+    .badge-pt { background: rgba(244,63,94,0.12); color: #f43f5e; }
+    .badge-cs { background: rgba(5,150,105,0.12); color: #059669; }
+
+    /* ─── Responsive ────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .bento-card--large {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+      .hero-stats { gap: 32px; }
+    }
+    @media (max-width: 768px) {
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+      .bento-card--large,
+      .bento-card--medium {
+        grid-column: span 1;
+        grid-row: span 1;
+      }
+      .hero h1 { font-size: 2rem; }
+      .hero-stats { gap: 24px; }
+      .hero-stat-number { font-size: 1.8rem; }
+      .nav-links { display: none; }
+      .kb-categories { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+      .footer { flex-direction: column; text-align: center; }
+    }
+
+    /* ─── Scroll reveal transition ──────────────────── */
+    .bento-card {
+      transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+                  box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                  border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Card flex layout for bottom link */
+    .bento-card { display: flex; flex-direction: column; }
+    .card-bottom { margin-top: auto; padding-top: 16px; }
+
+    /* KB view map button */
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      background: transparent;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Tracking card visual */
+    .tracking-visual {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .tracking-stage {
+      text-align: center;
+      padding: 12px 8px;
+      border-radius: 8px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+    }
+    .tracking-stage-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .tracking-stage-count {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 20px;
+      font-weight: 700;
+      color: #06b6d4;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Beta Ribbon -->
+  <div style="position:fixed;top:12px;right:12px;z-index:9999;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:1px;padding:4px 12px;border-radius:6px;box-shadow:0 2px 12px rgba(99,102,241,0.4);pointer-events:none;">BETA</div>
+
+  <!-- Navigation -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/overview-bento.html" class="nav-brand">&#x1F9E0; ML Interview Prep Kit</a>
+      <div class="nav-links">
+        <a href="/overview-bento.html" class="nav-link active">Overview</a>
+        <a href="/" class="nav-link">Mind Map</a>
+        <a href="/docs/" class="nav-link">Docs</a>
+      </div>
+      <div class="nav-actions">
+        <a href="https://github.com/prasanth-ntu/ml-interview-prep-kit" target="_blank" rel="noopener" class="nav-icon-btn" title="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+        <button class="nav-icon-btn" id="themeToggle" title="Toggle theme">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" id="themeIcon">
+            <circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-mesh"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Open Source
+      </div>
+      <h1>ML Interview <span>Prep Kit</span></h1>
+      <p class="hero-tagline">Your complete preparation toolkit — 104 topics, 6 system designs, coding practice, career frameworks, and AI workflows</p>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-number" data-target="104">0</div>
+          <div class="hero-stat-label">Topics</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-number" data-target="14">0</div>
+          <div class="hero-stat-label">Categories</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-number" data-target="6">0</div>
+          <div class="hero-stat-label">System Designs</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-number" data-target="6">0</div>
+          <div class="hero-stat-label">AI Prompts</div>
+        </div>
+      </div>
+      <div class="command-hint" id="commandHintBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        Search everything
+        <kbd>&#8984;K</kbd>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento Grid -->
+  <section class="bento-section">
+    <div class="bento-grid" id="bentoGrid">
+      <!-- Cards injected by JS -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-left">ML Interview Prep Kit &middot; MIT License</div>
+    <div class="footer-links">
+      <a href="/" class="footer-link">Mind Map</a>
+      <a href="/docs/" class="footer-link">Documentation</a>
+      <a href="https://github.com/prasanth-ntu/ml-interview-prep-kit" class="footer-link" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
+
+  <!-- Command Palette -->
+  <div class="command-overlay" id="commandOverlay">
+    <div class="command-palette">
+      <div class="command-input-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" class="command-input" id="commandInput" placeholder="Search topics, designs, frameworks..." autocomplete="off">
+      </div>
+      <div class="command-results" id="commandResults"></div>
+    </div>
+  </div>
+
+  <!-- Data -->
+  <script src="../ml-knowledge-map-data.js"></script>
+
+  <script>
+    // ─── Section Data ─────────────────────────────────
+    const sections = {
+      systemDesign: [
+        { name: "Interview Framework", desc: "5-step methodology for ML system design", link: "/docs/system-design/template/" },
+        { name: "RAG Customer Support", desc: "End-to-end RAG system walkthrough", link: "/docs/system-design/rag-customer-support/" },
+        { name: "ML Deployment Pipeline", desc: "CI/CD, Kubernetes, monitoring", link: "/docs/knowledge-base/scenarios/#1-ml-model-deployment-pipeline" },
+        { name: "Conversational AI Chatbot", desc: "Agentic AI, RAG, tool calling", link: "/docs/knowledge-base/scenarios/#2-conversational-ai-chatbot" },
+        { name: "Anomaly Detection", desc: "Real-time feature engineering & monitoring", link: "/docs/knowledge-base/scenarios/#3-real-time-anomaly-detection-system" },
+        { name: "Sales Forecasting", desc: "Time series, A/B testing", link: "/docs/knowledge-base/scenarios/#4-sales-forecasting-system" },
+        { name: "Recommendation System", desc: "Collaborative filtering, embeddings", link: "/docs/knowledge-base/scenarios/#5-recommendation-system" },
+        { name: "AML Transaction Monitoring", desc: "Graph ML, explainability", link: "/docs/knowledge-base/scenarios/#6-aml-transaction-monitoring" }
+      ],
+      codingPractice: [
+        { name: "Arrays & Strings", link: "/docs/coding-practice/by-topic/arrays-strings/" },
+        { name: "Dynamic Programming", link: "/docs/coding-practice/by-topic/dynamic-programming/" },
+        { name: "Trees & Graphs", link: "/docs/coding-practice/by-topic/trees-graphs/" },
+        { name: "Linked Lists", link: "/docs/coding-practice/by-topic/linked-lists/" },
+        { name: "Sorting & Searching", link: "/docs/coding-practice/by-topic/sorting-searching/" },
+        { name: "Math & Statistics", link: "/docs/coding-practice/by-topic/math-statistics/" }
+      ],
+      careerFrameworks: [
+        { name: "Offer Decision Matrix", desc: "Structured framework for comparing offers", link: "/docs/career-frameworks/offer-decision-matrix/" },
+        { name: "Negotiation Strategy", desc: "Tactics and templates for compensation", link: "/docs/career-frameworks/negotiation-strategy/" },
+        { name: "STAR Stories Guide", desc: "Behavioral interview storytelling", link: "/docs/career-frameworks/star-stories-guide/" },
+        { name: "Strategy Template", desc: "Career planning & T-shape audit", link: "/docs/career-frameworks/strategy-template/" }
+      ],
+      promptTemplates: [
+        { name: "Interview Debrief", desc: "Post-interview analysis", link: "/docs/prompt-templates/interview-debrief/" },
+        { name: "Prep Drill Session", desc: "Timed practice questions", link: "/docs/prompt-templates/interview-prep-drill/" },
+        { name: "Setup Interview Round", desc: "Round preparation", link: "/docs/prompt-templates/setup-interview-round/" },
+        { name: "New Company Setup", desc: "Company onboarding", link: "/docs/prompt-templates/new-company-setup/" },
+        { name: "Add Knowledge Topic", desc: "KB content addition", link: "/docs/prompt-templates/add-knowledge-topic/" },
+        { name: "Check Broken Links", desc: "Internal link validation", link: "/docs/prompt-templates/check-broken-links/" }
+      ]
+    };
+
+    // ─── Arrow SVG ────────────────────────────────────
+    const arrowSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14m-7-7 7 7-7 7"/></svg>';
+
+    // ─── Build Bento Grid ─────────────────────────────
+    function buildGrid() {
+      const grid = document.getElementById('bentoGrid');
+      const cats = knowledgeMapData.children;
+      const totalTopics = cats.reduce((s, c) => s + (c.children ? c.children.length : 0), 0);
+
+      // 1. Knowledge Base (Large)
+      let kbHtml = `
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-icon">&#x1F4DA;</div>
+            <span class="card-title">Knowledge Base</span>
+          </div>
+          <span class="card-count">${totalTopics} topics</span>
+        </div>
+        <p class="card-desc">14 categories covering ML foundations, deep learning, NLP, LLMs, MLOps, and more. Click any category to explore its topics.</p>
+        <div class="kb-categories" id="kbCategories">
+      `;
+      cats.forEach((cat, i) => {
+        const topicCount = cat.children ? cat.children.length : 0;
+        const topicsHtml = cat.children ? cat.children.map(t =>
+          `<span class="kb-topic" title="${(t.desc || '').replace(/"/g, '&quot;')}">${t.name}</span>`
+        ).join('') : '';
+        kbHtml += `
+          <div class="kb-cat" data-index="${i}">
+            <div class="kb-cat-name">
+              ${cat.name}
+              <span class="kb-cat-badge">${topicCount}</span>
+            </div>
+            <div class="kb-cat-desc">${cat.desc || ''}</div>
+            <div class="kb-topics">
+              <div class="kb-topics-list">${topicsHtml}</div>
+            </div>
+          </div>
+        `;
+      });
+      kbHtml += `</div>
+        <div class="card-bottom" style="display:flex;gap:12px;align-items:center;flex-wrap:wrap;">
+          <a href="/" class="btn-outline">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48 2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48 2.83-2.83"/></svg>
+            View Mind Map
+          </a>
+          <a href="/docs/knowledge-base/ml-ds-llm-fundamentals/" class="card-link">Browse all topics ${arrowSvg}</a>
+        </div>
+      `;
+      const kbCard = createCard('bento-card--large card-kb', kbHtml);
+      grid.appendChild(kbCard);
+
+      // 2. System Design (Medium)
+      let sdHtml = `
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-icon">&#x1F3D7;&#xFE0F;</div>
+            <span class="card-title">System Design</span>
+          </div>
+          <span class="card-count">${sections.systemDesign.length}</span>
+        </div>
+        <p class="card-desc">End-to-end ML system design scenarios with a structured interview framework.</p>
+        <div class="item-grid">
+      `;
+      sections.systemDesign.forEach(s => {
+        sdHtml += `<a href="${s.link}" class="item-card"><div class="item-card-name">${s.name}</div><div class="item-card-desc">${s.desc}</div></a>`;
+      });
+      sdHtml += `</div>
+        <div class="card-bottom"><a href="/docs/system-design/" class="card-link">Explore designs ${arrowSvg}</a></div>
+      `;
+      grid.appendChild(createCard('bento-card--medium card-sd', sdHtml));
+
+      // 3. Coding Practice
+      let cpHtml = `
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-icon">&#x1F4BB;</div>
+            <span class="card-title">Coding Practice</span>
+          </div>
+          <span class="card-count">${sections.codingPractice.length}</span>
+        </div>
+        <p class="card-desc">Curated problem sets organized by topic for technical interview rounds.</p>
+        <div class="item-grid">
+      `;
+      sections.codingPractice.forEach(s => {
+        cpHtml += `<a href="${s.link}" class="item-card"><div class="item-card-name">${s.name}</div></a>`;
+      });
+      cpHtml += `</div>
+        <div class="card-bottom"><a href="/docs/coding-practice/by-topic/" class="card-link">Practice problems ${arrowSvg}</a></div>
+      `;
+      grid.appendChild(createCard('card-cp', cpHtml));
+
+      // 4. Career Frameworks
+      let cfHtml = `
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-icon">&#x1F3AF;</div>
+            <span class="card-title">Career Frameworks</span>
+          </div>
+          <span class="card-count">${sections.careerFrameworks.length}</span>
+        </div>
+        <div class="item-grid">
+      `;
+      sections.careerFrameworks.forEach(s => {
+        cfHtml += `<a href="${s.link}" class="item-card"><div class="item-card-name">${s.name}</div><div class="item-card-desc">${s.desc}</div></a>`;
+      });
+      cfHtml += `</div>
+        <div class="card-bottom"><a href="/docs/career-frameworks/" class="card-link">View frameworks ${arrowSvg}</a></div>
+      `;
+      grid.appendChild(createCard('card-cf', cfHtml));
+
+      // 5. Interview Tracking
+      let itHtml = `
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-icon">&#x1F4CB;</div>
+            <span class="card-title">Interview Tracking</span>
+          </div>
+        </div>
+        <p class="card-desc">Track your interview pipeline from application to offer with structured templates.</p>
+        <div class="tracking-visual">
+          <div class="tracking-stage"><div class="tracking-stage-count">--</div><div class="tracking-stage-label">Applied</div></div>
+          <div class="tracking-stage"><div class="tracking-stage-count">--</div><div class="tracking-stage-label">Interviewing</div></div>
+          <div class="tracking-stage"><div class="tracking-stage-count">--</div><div class="tracking-stage-label">Offers</div></div>
+        </div>
+        <div class="card-bottom"><a href="/docs/interview-tracking/" class="card-link">Setup tracking ${arrowSvg}</a></div>
+      `;
+      grid.appendChild(createCard('card-it', itHtml));
+
+      // 6. AI Workflows / Prompt Templates
+      let ptHtml = `
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-icon">&#x1F916;</div>
+            <span class="card-title">AI Workflows</span>
+          </div>
+          <span class="card-count">${sections.promptTemplates.length}</span>
+        </div>
+        <p class="card-desc">AI-powered prompt templates for every stage of your interview journey.</p>
+        <div class="prompt-chain">
+      `;
+      sections.promptTemplates.forEach((s, i) => {
+        ptHtml += `<a href="${s.link}" class="prompt-chain-item">
+          <span class="prompt-chain-num">${i + 1}</span>
+          <div><div class="prompt-chain-text">${s.name}</div><div class="prompt-chain-desc">${s.desc}</div></div>
+        </a>`;
+      });
+      ptHtml += `</div>
+        <div class="card-bottom"><a href="/docs/prompt-templates/" class="card-link">View all prompts ${arrowSvg}</a></div>
+      `;
+      grid.appendChild(createCard('card-pt', ptHtml));
+
+      // 7. Case Study
+      let csHtml = `
+        <div class="card-header">
+          <div class="card-header-left">
+            <div class="card-icon">&#x1F680;</div>
+            <span class="card-title">Case Study</span>
+          </div>
+        </div>
+        <p class="card-desc">ML Prediction Marketplace — a full end-to-end project case study demonstrating real-world ML engineering.</p>
+        <div class="case-study-visual">
+          <div style="font-weight:600;font-size:14px;margin-bottom:6px;">ML Prediction Marketplace</div>
+          <div style="font-size:13px;color:var(--text-secondary);line-height:1.5;">Complete project walkthrough covering data pipeline, model training, deployment, monitoring, and business metrics.</div>
+          <div class="case-study-tags">
+            <span class="case-study-tag">MLOps</span>
+            <span class="case-study-tag">FastAPI</span>
+            <span class="case-study-tag">Docker</span>
+            <span class="case-study-tag">Monitoring</span>
+            <span class="case-study-tag">CI/CD</span>
+          </div>
+        </div>
+        <div class="card-bottom"><a href="/docs/project-case-study/ml-prediction-marketplace/" class="card-link">Read case study ${arrowSvg}</a></div>
+      `;
+      grid.appendChild(createCard('card-cs', csHtml));
+    }
+
+    function createCard(classes, innerHTML) {
+      const div = document.createElement('div');
+      div.className = 'bento-card ' + classes;
+      div.innerHTML = innerHTML;
+      return div;
+    }
+
+    // ─── KB Category Expand ───────────────────────────
+    function initKbExpand() {
+      document.getElementById('kbCategories').addEventListener('click', (e) => {
+        const cat = e.target.closest('.kb-cat');
+        if (!cat) return;
+        const wasExpanded = cat.classList.contains('expanded');
+        document.querySelectorAll('.kb-cat.expanded').forEach(c => c.classList.remove('expanded'));
+        if (!wasExpanded) cat.classList.add('expanded');
+      });
+    }
+
+    // ─── Scroll Reveal ────────────────────────────────
+    function initReveal() {
+      const cards = document.querySelectorAll('.bento-card');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            const card = entry.target;
+            const delay = Array.from(cards).indexOf(card) * 50;
+            setTimeout(() => card.classList.add('revealed'), delay);
+            observer.unobserve(card);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      cards.forEach(card => observer.observe(card));
+    }
+
+    // ─── Stat Counter Animation ───────────────────────
+    function animateStats() {
+      const stats = document.querySelectorAll('.hero-stat-number[data-target]');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseInt(el.dataset.target);
+            const duration = 1200;
+            const start = performance.now();
+            function tick(now) {
+              const elapsed = now - start;
+              const progress = Math.min(elapsed / duration, 1);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              el.textContent = Math.round(eased * target);
+              if (progress < 1) requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.5 });
+      stats.forEach(s => observer.observe(s));
+    }
+
+    // ─── Theme Toggle ─────────────────────────────────
+    function initTheme() {
+      const saved = localStorage.getItem('ml-prep-theme');
+      if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      }
+      document.getElementById('themeToggle').addEventListener('click', () => {
+        const isDark = document.documentElement.classList.toggle('dark');
+        localStorage.setItem('ml-prep-theme', isDark ? 'dark' : 'light');
+        updateThemeIcon();
+      });
+      updateThemeIcon();
+    }
+    function updateThemeIcon() {
+      const isDark = document.documentElement.classList.contains('dark');
+      document.getElementById('themeIcon').innerHTML = isDark
+        ? '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>'
+        : '<circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+    }
+
+    // ─── Command Palette ──────────────────────────────
+    function initCommand() {
+      const overlay = document.getElementById('commandOverlay');
+      const input = document.getElementById('commandInput');
+      const results = document.getElementById('commandResults');
+      let activeIndex = -1;
+
+      // Build search index
+      const searchItems = [];
+      // KB topics
+      if (typeof knowledgeMapData !== 'undefined') {
+        knowledgeMapData.children.forEach(cat => {
+          searchItems.push({ name: cat.name, desc: cat.desc || '', badge: 'KB', badgeClass: 'badge-kb', link: '/docs/knowledge-base/ml-ds-llm-fundamentals/' });
+          (cat.children || []).forEach(topic => {
+            searchItems.push({ name: topic.name, desc: topic.desc || '', badge: 'KB', badgeClass: 'badge-kb', link: '/docs/knowledge-base/ml-ds-llm-fundamentals/' });
+          });
+        });
+      }
+      // Other sections
+      sections.systemDesign.forEach(s => searchItems.push({ name: s.name, desc: s.desc, badge: 'SD', badgeClass: 'badge-sd', link: s.link }));
+      sections.codingPractice.forEach(s => searchItems.push({ name: s.name, desc: '', badge: 'Code', badgeClass: 'badge-cp', link: s.link }));
+      sections.careerFrameworks.forEach(s => searchItems.push({ name: s.name, desc: s.desc, badge: 'Career', badgeClass: 'badge-cf', link: s.link }));
+      sections.promptTemplates.forEach(s => searchItems.push({ name: s.name, desc: s.desc, badge: 'AI', badgeClass: 'badge-pt', link: s.link }));
+      searchItems.push({ name: 'ML Prediction Marketplace', desc: 'Full project case study', badge: 'Case', badgeClass: 'badge-cs', link: '/docs/project-case-study/ml-prediction-marketplace/' });
+
+      function open() {
+        overlay.classList.add('open');
+        input.value = '';
+        input.focus();
+        render('');
+        activeIndex = -1;
+      }
+      function close() {
+        overlay.classList.remove('open');
+        activeIndex = -1;
+      }
+
+      function render(query) {
+        const q = query.toLowerCase().trim();
+        const filtered = q ? searchItems.filter(item =>
+          item.name.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q)
+        ) : searchItems.slice(0, 12);
+
+        if (filtered.length === 0) {
+          results.innerHTML = '<div class="command-empty">No results found</div>';
+          return;
+        }
+        results.innerHTML = filtered.slice(0, 20).map((item, i) => `
+          <div class="command-item${i === activeIndex ? ' active' : ''}" data-index="${i}" data-link="${item.link}">
+            <span class="command-item-badge ${item.badgeClass}">${item.badge}</span>
+            <span class="command-item-name">${item.name}</span>
+            <span class="command-item-desc">${item.desc}</span>
+          </div>
+        `).join('');
+      }
+
+      input.addEventListener('input', () => {
+        activeIndex = -1;
+        render(input.value);
+      });
+
+      results.addEventListener('click', (e) => {
+        const item = e.target.closest('.command-item');
+        if (item) {
+          window.location.href = item.dataset.link;
+        }
+      });
+
+      // Keyboard navigation
+      document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+          e.preventDefault();
+          overlay.classList.contains('open') ? close() : open();
+          return;
+        }
+        if (!overlay.classList.contains('open')) return;
+        if (e.key === 'Escape') { close(); return; }
+
+        const items = results.querySelectorAll('.command-item');
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          activeIndex = Math.min(activeIndex + 1, items.length - 1);
+          items.forEach((el, i) => el.classList.toggle('active', i === activeIndex));
+          items[activeIndex]?.scrollIntoView({ block: 'nearest' });
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          activeIndex = Math.max(activeIndex - 1, 0);
+          items.forEach((el, i) => el.classList.toggle('active', i === activeIndex));
+          items[activeIndex]?.scrollIntoView({ block: 'nearest' });
+        } else if (e.key === 'Enter' && activeIndex >= 0 && items[activeIndex]) {
+          window.location.href = items[activeIndex].dataset.link;
+        }
+      });
+
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) close();
+      });
+
+      document.getElementById('commandHintBtn').addEventListener('click', open);
+    }
+
+    // ─── Init ─────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      buildGrid();
+      initKbExpand();
+      initReveal();
+      animateStats();
+      initCommand();
+    });
+  </script>
+</body>
+</html>

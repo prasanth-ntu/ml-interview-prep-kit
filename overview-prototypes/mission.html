@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission Control — ML Interview Prep Kit</title>
+  <meta name="description" content="Mission Control dashboard for ML Interview Prep Kit. Track your interview preparation progress across knowledge base, system design, coding, career frameworks, and AI workflows.">
+  <meta name="theme-color" content="#0a0a0f">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Mission Control — ML Interview Prep Kit">
+  <meta property="og:description" content="NASA/SpaceX-style mission control dashboard for ML interview preparation. Track systems, drills, and career readiness.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://interview.prasanth.io/overview-mission.html">
+  <meta property="og:site_name" content="ML Interview Prep Kit">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧠</text></svg>">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── Color Tokens ─────────────────────────── */
+    :root {
+      --bg-space: #0a0a0f;
+      --bg-panel: #0f1119;
+      --bg-panel-header: #141822;
+      --border-panel: #1e2433;
+      --text-bright: #e2e8f0;
+      --text-dim: #64748b;
+      --text-data: #94a3b8;
+      --status-green: #22c55e;
+      --status-blue: #3b82f6;
+      --status-purple: #8b5cf6;
+      --status-amber: #f59e0b;
+      --status-rose: #f43f5e;
+      --status-cyan: #06b6d4;
+      --status-emerald: #10b981;
+      --glow-green: rgba(34, 197, 94, 0.3);
+      --scanline: rgba(255, 255, 255, 0.03);
+    }
+
+    /* ─── Reset & Base ─────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      font-size: 14px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: var(--bg-space);
+      color: var(--text-bright);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* ─── Scanline Overlay ─────────────────────── */
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 9999;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent 0px,
+        transparent 2px,
+        var(--scanline) 2px,
+        var(--scanline) 3px
+      );
+      animation: scanlineMove 8s linear infinite;
+    }
+
+    @keyframes scanlineMove {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(3px); }
+    }
+
+    /* ─── Top Navigation ───────────────────────── */
+    .top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 24px;
+      background: rgba(15, 17, 25, 0.95);
+      border-bottom: 1px solid var(--border-panel);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(12px);
+    }
+
+    .top-nav-brand {
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-bright);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .top-nav-links {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .top-nav-links a {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .top-nav-links a:hover,
+    .top-nav-links a.active {
+      color: var(--text-bright);
+    }
+
+    .top-nav-links a.active {
+      border-bottom: 1px solid var(--status-blue);
+      padding-bottom: 2px;
+    }
+
+    .gh-link svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--text-dim);
+      transition: fill 0.2s;
+    }
+    .gh-link:hover svg { fill: var(--text-bright); }
+
+    /* ─── Mission Header ───────────────────────── */
+    .mission-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 28px;
+      background: linear-gradient(180deg, #0d0d14 0%, var(--bg-space) 100%);
+      border-bottom: 1px solid var(--border-panel);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .mission-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-bright);
+      text-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+    }
+
+    .mission-clock {
+      font-size: 1.1rem;
+      font-weight: 500;
+      letter-spacing: 2px;
+      color: var(--status-cyan);
+      text-shadow: 0 0 12px rgba(6, 182, 212, 0.4);
+    }
+
+    .mission-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--status-green);
+      text-shadow: 0 0 10px var(--glow-green);
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--status-green);
+      animation: pulseGlow 2s ease-in-out infinite;
+      box-shadow: 0 0 8px var(--glow-green);
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--glow-green); }
+      50% { opacity: 0.5; box-shadow: 0 0 3px var(--glow-green); }
+    }
+
+    /* ─── System Panels Grid ───────────────────── */
+    .panels-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 20px 24px;
+      max-width: 1600px;
+      margin: 0 auto;
+    }
+
+    .panel {
+      background: var(--bg-panel);
+      border: 1px solid var(--border-panel);
+      border-radius: 6px;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: border-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    }
+
+    .panel.booted {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .panel:hover {
+      border-color: #2a3347;
+      transform: scale(1.005);
+      box-shadow: 0 0 20px rgba(30, 36, 51, 0.5);
+    }
+
+    .panel.span-2 {
+      grid-column: span 2;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 16px;
+      background: var(--bg-panel-header);
+      border-bottom: 1px solid var(--border-panel);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-data);
+      text-shadow: 0 0 8px rgba(148, 163, 184, 0.15);
+    }
+
+    .led {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .led-blue { background: var(--status-blue); box-shadow: 0 0 6px rgba(59, 130, 246, 0.5); animation: ledPulse 3s ease-in-out infinite; }
+    .led-purple { background: var(--status-purple); box-shadow: 0 0 6px rgba(139, 92, 246, 0.5); animation: ledPulse 3s ease-in-out infinite 0.3s; }
+    .led-green { background: var(--status-green); box-shadow: 0 0 6px rgba(34, 197, 94, 0.5); animation: ledPulse 3s ease-in-out infinite 0.6s; }
+    .led-amber { background: var(--status-amber); box-shadow: 0 0 6px rgba(245, 158, 11, 0.5); animation: ledPulse 3s ease-in-out infinite 0.9s; }
+    .led-rose { background: var(--status-rose); box-shadow: 0 0 6px rgba(244, 63, 94, 0.5); animation: ledPulse 3s ease-in-out infinite 1.2s; }
+    .led-emerald { background: var(--status-emerald); box-shadow: 0 0 6px rgba(16, 185, 129, 0.5); animation: ledPulse 3s ease-in-out infinite 1.5s; }
+
+    @keyframes ledPulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .panel-body {
+      padding: 14px 16px;
+    }
+
+    .stats-row {
+      font-size: 0.72rem;
+      letter-spacing: 1.5px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(30, 36, 51, 0.6);
+    }
+
+    .stats-row .stat-num {
+      color: var(--text-bright);
+      font-weight: 600;
+    }
+
+    /* ─── KB Category List ─────────────────────── */
+    .kb-categories {
+      max-height: 260px;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #1e2433 transparent;
+    }
+
+    .kb-categories::-webkit-scrollbar { width: 4px; }
+    .kb-categories::-webkit-scrollbar-track { background: transparent; }
+    .kb-categories::-webkit-scrollbar-thumb { background: #1e2433; border-radius: 2px; }
+
+    .kb-cat {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 8px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-size: 0.78rem;
+    }
+
+    .kb-cat:hover {
+      background: rgba(59, 130, 246, 0.08);
+    }
+
+    .kb-cat-name {
+      color: var(--text-data);
+      letter-spacing: 0.5px;
+    }
+
+    .kb-cat-count {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      background: rgba(30, 36, 51, 0.8);
+      padding: 1px 6px;
+      border-radius: 3px;
+      min-width: 24px;
+      text-align: center;
+    }
+
+    .kb-cat-chevron {
+      color: var(--text-dim);
+      font-size: 0.65rem;
+      margin-left: 6px;
+      transition: transform 0.2s;
+    }
+
+    .kb-cat.expanded .kb-cat-chevron {
+      transform: rotate(90deg);
+    }
+
+    .kb-topics {
+      display: none;
+      padding: 4px 0 4px 20px;
+    }
+
+    .kb-cat.expanded + .kb-topics,
+    .kb-topics.show {
+      display: block;
+    }
+
+    .kb-topic {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      padding: 3px 0;
+      letter-spacing: 0.3px;
+    }
+
+    .kb-topic::before {
+      content: '├─ ';
+      color: #1e2433;
+    }
+
+    .kb-topic:last-child::before {
+      content: '└─ ';
+    }
+
+    /* ─── Progress Bar ─────────────────────────── */
+    .progress-bar-container {
+      margin-top: 12px;
+      background: rgba(30, 36, 51, 0.5);
+      border-radius: 3px;
+      height: 6px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      border-radius: 3px;
+      width: 0;
+      transition: width 1.5s ease-out;
+    }
+
+    .progress-bar-fill.blue { background: linear-gradient(90deg, var(--status-blue), #60a5fa); }
+    .progress-bar-fill.purple { background: linear-gradient(90deg, var(--status-purple), #a78bfa); }
+    .progress-bar-fill.green { background: linear-gradient(90deg, var(--status-green), #4ade80); }
+    .progress-bar-fill.amber { background: linear-gradient(90deg, var(--status-amber), #fbbf24); }
+    .progress-bar-fill.rose { background: linear-gradient(90deg, var(--status-rose), #fb7185); }
+    .progress-bar-fill.emerald { background: linear-gradient(90deg, var(--status-emerald), #34d399); }
+
+    /* ─── Item Lists ───────────────────────────── */
+    .item-list {
+      list-style: none;
+    }
+
+    .item-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 4px;
+      font-size: 0.78rem;
+      color: var(--text-data);
+      border-bottom: 1px solid rgba(30, 36, 51, 0.3);
+    }
+
+    .item-list li:last-child { border-bottom: none; }
+
+    .item-list a {
+      color: var(--text-data);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .item-list a:hover {
+      color: var(--text-bright);
+    }
+
+    .item-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      margin-left: auto;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 180px;
+    }
+
+    .badge {
+      font-size: 0.58rem;
+      padding: 1px 5px;
+      border-radius: 2px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .badge-rag { background: rgba(59, 130, 246, 0.15); color: var(--status-blue); }
+    .badge-deploy { background: rgba(139, 92, 246, 0.15); color: var(--status-purple); }
+    .badge-ml { background: rgba(34, 197, 94, 0.15); color: var(--status-green); }
+    .badge-ai { background: rgba(6, 182, 212, 0.15); color: var(--status-cyan); }
+    .badge-framework { background: rgba(245, 158, 11, 0.15); color: var(--status-amber); }
+
+    .difficulty {
+      font-size: 0.6rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .diff-med { color: var(--status-amber); }
+    .diff-hard { color: var(--status-rose); }
+    .diff-easy { color: var(--status-green); }
+
+    /* ─── Panel Status ─────────────────────────── */
+    .panel-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 12px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(30, 36, 51, 0.6);
+      font-size: 0.68rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .status-label {
+      color: var(--text-dim);
+    }
+
+    .status-value {
+      font-weight: 600;
+    }
+
+    .status-ready { color: var(--status-green); }
+    .status-active { color: var(--status-blue); }
+    .status-standby { color: var(--status-amber); }
+    .status-online { color: var(--status-cyan); }
+    .status-loaded { color: var(--status-emerald); }
+
+    /* ─── Panel Footer ─────────────────────────── */
+    .panel-footer {
+      padding: 8px 16px;
+      border-top: 1px solid var(--border-panel);
+      text-align: right;
+    }
+
+    .panel-footer a {
+      font-size: 0.7rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .panel-footer a:hover {
+      color: var(--text-bright);
+    }
+
+    /* ─── AI Workflow Flow Diagram ──────────────── */
+    .flow-diagram {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin: 10px 0;
+      flex-wrap: wrap;
+    }
+
+    .flow-node {
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border: 1px solid var(--border-panel);
+      border-radius: 3px;
+      color: var(--text-data);
+      background: rgba(20, 24, 34, 0.8);
+    }
+
+    .flow-arrow {
+      color: var(--text-dim);
+      font-size: 0.7rem;
+    }
+
+    /* ─── Case Study Brief ─────────────────────── */
+    .case-brief {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.82rem;
+      color: var(--text-data);
+      line-height: 1.6;
+      margin: 8px 0;
+    }
+
+    .case-brief strong {
+      color: var(--text-bright);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.78rem;
+    }
+
+    /* ─── Mission Timeline ─────────────────────── */
+    .timeline-bar {
+      background: var(--bg-panel);
+      border-top: 1px solid var(--border-panel);
+      padding: 24px 28px 28px;
+      margin-top: 8px;
+    }
+
+    .timeline-label {
+      font-size: 0.68rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 18px;
+      text-align: center;
+    }
+
+    .timeline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 40px;
+      right: 40px;
+      height: 2px;
+      background: var(--border-panel);
+    }
+
+    .timeline-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid var(--border-panel);
+      background: var(--bg-space);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      transition: all 0.3s;
+    }
+
+    .timeline-stage.active .timeline-dot {
+      border-color: var(--status-cyan);
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--status-cyan);
+      box-shadow: 0 0 12px rgba(6, 182, 212, 0.3);
+      animation: timelinePulse 2s ease-in-out infinite;
+    }
+
+    .timeline-stage.completed .timeline-dot {
+      border-color: var(--status-green);
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--status-green);
+    }
+
+    @keyframes timelinePulse {
+      0%, 100% { box-shadow: 0 0 12px rgba(6, 182, 212, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(6, 182, 212, 0.6); }
+    }
+
+    .timeline-text {
+      text-align: center;
+      max-width: 100px;
+    }
+
+    .timeline-name {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-data);
+    }
+
+    .timeline-desc {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.58rem;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .timeline-stage.active .timeline-name {
+      color: var(--status-cyan);
+    }
+
+    /* ─── Command Input ────────────────────────── */
+    .command-input-bar {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 200;
+    }
+
+    .command-trigger {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 20px;
+      background: rgba(15, 17, 25, 0.95);
+      border: 1px solid var(--border-panel);
+      border-radius: 8px;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .command-trigger:hover {
+      border-color: #2a3347;
+      box-shadow: 0 0 20px rgba(30, 36, 51, 0.5);
+    }
+
+    .command-trigger-text {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      letter-spacing: 0.5px;
+    }
+
+    .command-trigger-kbd {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      background: rgba(30, 36, 51, 0.6);
+      padding: 2px 6px;
+      border-radius: 3px;
+      border: 1px solid var(--border-panel);
+    }
+
+    /* ─── Command Palette Overlay ───────────────── */
+    .command-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      justify-content: center;
+      padding-top: 15vh;
+      backdrop-filter: blur(4px);
+    }
+
+    .command-overlay.open {
+      display: flex;
+    }
+
+    .command-palette {
+      width: 560px;
+      max-width: 90vw;
+      background: var(--bg-panel);
+      border: 1px solid var(--border-panel);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      max-height: 60vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .command-input-wrapper {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border-panel);
+      gap: 10px;
+    }
+
+    .command-prompt {
+      color: var(--status-cyan);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .command-input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--text-bright);
+      letter-spacing: 0.5px;
+    }
+
+    .command-input::placeholder {
+      color: var(--text-dim);
+    }
+
+    .command-results {
+      overflow-y: auto;
+      max-height: calc(60vh - 60px);
+      scrollbar-width: thin;
+      scrollbar-color: #1e2433 transparent;
+    }
+
+    .command-result {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 18px;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+
+    .command-result:hover,
+    .command-result.selected {
+      background: rgba(59, 130, 246, 0.08);
+    }
+
+    .command-result-icon {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+      width: 50px;
+      flex-shrink: 0;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .command-result-name {
+      font-size: 0.8rem;
+      color: var(--text-data);
+    }
+
+    .command-result-section {
+      font-size: 0.65rem;
+      color: var(--text-dim);
+      margin-left: auto;
+      letter-spacing: 0.5px;
+    }
+
+    .command-empty {
+      padding: 20px 18px;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      text-align: center;
+    }
+
+    /* ─── Boot Flash Effect ─────────────────────── */
+    @keyframes bootFlash {
+      0% { opacity: 0; transform: translateY(8px); }
+      30% { opacity: 0.6; }
+      50% { opacity: 0.3; }
+      70% { opacity: 0.8; }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .panel.boot-anim {
+      animation: bootFlash 0.4s ease-out forwards;
+    }
+
+    /* ─── Counter Animation ────────────────────── */
+    @keyframes counterBlink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    .stat-num.counting {
+      animation: counterBlink 0.1s linear 5;
+    }
+
+    /* ─── Responsive ───────────────────────────── */
+    @media (max-width: 1024px) {
+      .panels-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .panel.span-2 {
+        grid-column: span 2;
+      }
+      .timeline {
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: center;
+      }
+      .timeline::before { display: none; }
+    }
+
+    @media (max-width: 700px) {
+      .panels-grid {
+        grid-template-columns: 1fr;
+      }
+      .panel.span-2 {
+        grid-column: span 1;
+      }
+      .mission-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        padding: 14px 16px;
+      }
+      .mission-title { font-size: 1rem; }
+      .mission-clock { font-size: 0.85rem; }
+      .top-nav { padding: 8px 14px; }
+      .panels-grid { padding: 12px; gap: 12px; }
+      .timeline-bar { padding: 16px 12px 20px; }
+      .timeline { gap: 12px; }
+      .command-trigger-text { display: none; }
+    }
+
+    /* ─── Sub-panels (Career) ──────────────────── */
+    .sub-panel {
+      margin-bottom: 8px;
+    }
+
+    .sub-panel-label {
+      font-size: 0.62rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 4px;
+      padding-bottom: 3px;
+      border-bottom: 1px solid rgba(30, 36, 51, 0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Beta Ribbon -->
+  <div style="position:fixed;top:12px;right:12px;z-index:9999;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;letter-spacing:1px;padding:4px 12px;border-radius:6px;box-shadow:0 2px 12px rgba(99,102,241,0.4);pointer-events:none;">BETA</div>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <a href="/" class="top-nav-brand">&#129504; ML Interview Prep Kit</a>
+    <div class="top-nav-links">
+      <a href="/overview-mission.html" class="active">Overview</a>
+      <a href="/">Mind Map</a>
+      <a href="/docs/">Docs</a>
+      <a href="https://github.com/prasanth-ntu/ml-interview-prep-kit" target="_blank" class="gh-link" aria-label="GitHub">
+        <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Mission Header -->
+  <header class="mission-header">
+    <div class="mission-title">&#128640; MISSION: ML INTERVIEW</div>
+    <div class="mission-clock" id="missionClock">--:--:-- UTC</div>
+    <div class="mission-status">
+      <span class="status-dot"></span>
+      MISSION STATUS: ACTIVE
+    </div>
+  </header>
+
+  <!-- System Panels -->
+  <main class="panels-grid" id="panelsGrid">
+
+    <!-- SYS-01: Knowledge Base (spans 2 cols) -->
+    <section class="panel span-2" data-boot="0">
+      <div class="panel-header">
+        <span class="led led-blue"></span>
+        SYS-01 KNOWLEDGE BASE
+      </div>
+      <div class="panel-body">
+        <div class="stats-row">
+          <span class="stat-num" data-target="104">0</span> TOPICS &nbsp;|&nbsp;
+          <span class="stat-num" data-target="14">0</span> CATEGORIES &nbsp;|&nbsp;
+          <span class="stat-num" data-target="3">0</span> RESOURCES
+        </div>
+        <div class="kb-categories" id="kbCategories">
+          <!-- Populated by JS -->
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill blue" data-width="78"></div>
+        </div>
+      </div>
+      <div class="panel-status">
+        <span class="status-label">Coverage</span>
+        <span class="status-value status-active">78% INDEXED</span>
+      </div>
+      <div class="panel-footer">
+        <a href="/docs/knowledge-base/">[VIEW DOCS &#8594;]</a>
+      </div>
+    </section>
+
+    <!-- SYS-02: System Design -->
+    <section class="panel" data-boot="1">
+      <div class="panel-header">
+        <span class="led led-purple"></span>
+        SYS-02 SYSTEM DESIGN
+      </div>
+      <div class="panel-body">
+        <div class="stats-row">
+          <span class="stat-num" data-target="8">0</span> SCENARIOS &nbsp;|&nbsp;
+          <span class="stat-num" data-target="1">0</span> FRAMEWORK
+        </div>
+        <ul class="item-list" id="sysDesignList"></ul>
+        <div class="panel-status">
+          <span class="status-label">Status</span>
+          <span class="status-value status-ready">READY FOR REVIEW</span>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <a href="/docs/system-design/">[VIEW DOCS &#8594;]</a>
+      </div>
+    </section>
+
+    <!-- SYS-03: Coding Drills -->
+    <section class="panel" data-boot="2">
+      <div class="panel-header">
+        <span class="led led-green"></span>
+        SYS-03 CODING DRILLS
+      </div>
+      <div class="panel-body">
+        <div class="stats-row">
+          <span class="stat-num" data-target="6">0</span> TOPIC AREAS
+        </div>
+        <ul class="item-list" id="codingList"></ul>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill green" data-width="45"></div>
+        </div>
+        <div class="panel-status">
+          <span class="status-label">Status</span>
+          <span class="status-value status-active">DRILLS ACTIVE</span>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <a href="/docs/coding-practice/">[VIEW DOCS &#8594;]</a>
+      </div>
+    </section>
+
+    <!-- SYS-04: Career Systems -->
+    <section class="panel" data-boot="3">
+      <div class="panel-header">
+        <span class="led led-amber"></span>
+        SYS-04 CAREER SYSTEMS
+      </div>
+      <div class="panel-body">
+        <div class="stats-row">
+          <span class="stat-num" data-target="4">0</span> FRAMEWORKS &nbsp;|&nbsp;
+          <span class="stat-num" data-target="5">0</span> TEMPLATES
+        </div>
+        <div class="sub-panel">
+          <div class="sub-panel-label">Career Frameworks</div>
+          <ul class="item-list" id="careerList"></ul>
+        </div>
+        <div class="sub-panel">
+          <div class="sub-panel-label">Interview Tracking</div>
+          <ul class="item-list" id="trackingList"></ul>
+        </div>
+        <div class="panel-status">
+          <span class="status-label">Status</span>
+          <span class="status-value status-standby">STANDBY</span>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <a href="/docs/career-frameworks/">[VIEW DOCS &#8594;]</a>
+      </div>
+    </section>
+
+    <!-- SYS-05: AI Workflows -->
+    <section class="panel" data-boot="4">
+      <div class="panel-header">
+        <span class="led led-rose"></span>
+        SYS-05 AI WORKFLOWS
+      </div>
+      <div class="panel-body">
+        <div class="stats-row">
+          <span class="stat-num" data-target="6">0</span> PROMPT TEMPLATES
+        </div>
+        <div class="flow-diagram">
+          <span class="flow-node">Setup</span>
+          <span class="flow-arrow">&#8594;</span>
+          <span class="flow-node">Drill</span>
+          <span class="flow-arrow">&#8594;</span>
+          <span class="flow-node">Interview</span>
+          <span class="flow-arrow">&#8594;</span>
+          <span class="flow-node">Debrief</span>
+        </div>
+        <ul class="item-list" id="promptList"></ul>
+        <div class="panel-status">
+          <span class="status-label">Status</span>
+          <span class="status-value status-online">ONLINE</span>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <a href="/docs/prompt-templates/">[VIEW DOCS &#8594;]</a>
+      </div>
+    </section>
+
+    <!-- SYS-06: Case Study -->
+    <section class="panel" data-boot="5">
+      <div class="panel-header">
+        <span class="led led-emerald"></span>
+        SYS-06 CASE STUDY
+      </div>
+      <div class="panel-body">
+        <div class="stats-row">
+          <span class="stat-num" data-target="1">0</span> PROJECT &nbsp;|&nbsp; END-TO-END
+        </div>
+        <div class="case-brief">
+          <strong>ML Prediction Marketplace</strong><br>
+          End-to-end classification system covering data pipeline, feature engineering, model training, deployment, and monitoring. Full production architecture with CI/CD and observability.
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill emerald" data-width="100"></div>
+        </div>
+        <div class="panel-status">
+          <span class="status-label">Status</span>
+          <span class="status-value status-loaded">REFERENCE LOADED</span>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <a href="/docs/project-case-study/">[VIEW DOCS &#8594;]</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Mission Timeline -->
+  <div class="timeline-bar">
+    <div class="timeline-label">Mission Timeline</div>
+    <div class="timeline">
+      <div class="timeline-stage completed">
+        <div class="timeline-dot">1</div>
+        <div class="timeline-text">
+          <div class="timeline-name">Foundation</div>
+          <div class="timeline-desc">Learn fundamentals</div>
+        </div>
+      </div>
+      <div class="timeline-stage active">
+        <div class="timeline-dot">2</div>
+        <div class="timeline-text">
+          <div class="timeline-name">Deep Dive</div>
+          <div class="timeline-desc">System design &amp; coding</div>
+        </div>
+      </div>
+      <div class="timeline-stage">
+        <div class="timeline-dot">3</div>
+        <div class="timeline-text">
+          <div class="timeline-name">Practice</div>
+          <div class="timeline-desc">Drills &amp; mock interviews</div>
+        </div>
+      </div>
+      <div class="timeline-stage">
+        <div class="timeline-dot">4</div>
+        <div class="timeline-text">
+          <div class="timeline-name">Prepare</div>
+          <div class="timeline-desc">Company research</div>
+        </div>
+      </div>
+      <div class="timeline-stage">
+        <div class="timeline-dot">5</div>
+        <div class="timeline-text">
+          <div class="timeline-name">Execute</div>
+          <div class="timeline-desc">Interview rounds</div>
+        </div>
+      </div>
+      <div class="timeline-stage">
+        <div class="timeline-dot">6</div>
+        <div class="timeline-text">
+          <div class="timeline-name">Debrief</div>
+          <div class="timeline-desc">Post-interview analysis</div>
+        </div>
+      </div>
+      <div class="timeline-stage">
+        <div class="timeline-dot">7</div>
+        <div class="timeline-text">
+          <div class="timeline-name">Launch</div>
+          <div class="timeline-desc">Accept offer!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Command Input Trigger -->
+  <div class="command-input-bar">
+    <div class="command-trigger" id="commandTrigger">
+      <span class="command-trigger-text">&gt; search topics...</span>
+      <span class="command-trigger-kbd">&#8984;K</span>
+    </div>
+  </div>
+
+  <!-- Command Palette Overlay -->
+  <div class="command-overlay" id="commandOverlay">
+    <div class="command-palette">
+      <div class="command-input-wrapper">
+        <span class="command-prompt">&gt;</span>
+        <input type="text" class="command-input" id="commandInput" placeholder="Search topics, scenarios, templates..." autocomplete="off" spellcheck="false">
+      </div>
+      <div class="command-results" id="commandResults"></div>
+    </div>
+  </div>
+
+  <!-- Knowledge Map Data -->
+  <script src="../ml-knowledge-map-data.js"></script>
+
+  <script>
+    // ─── Force Dark Theme ───────────────────────
+    localStorage.setItem('ml-prep-theme', 'dark');
+
+    // ─── Mission Data ───────────────────────────
+    const missionData = {
+      systemDesign: [
+        { name: "Interview Framework", desc: "5-step methodology", link: "/docs/system-design/template/", badge: "framework" },
+        { name: "RAG Customer Support", desc: "End-to-end RAG system", link: "/docs/system-design/rag-customer-support/", badge: "rag" },
+        { name: "ML Deployment Pipeline", desc: "CI/CD, K8s, monitoring", link: "/docs/knowledge-base/scenarios/#1-ml-model-deployment-pipeline", badge: "deploy" },
+        { name: "Conversational AI Chatbot", desc: "Agentic AI, RAG", link: "/docs/knowledge-base/scenarios/#2-conversational-ai-chatbot", badge: "ai" },
+        { name: "Anomaly Detection", desc: "Real-time detection", link: "/docs/knowledge-base/scenarios/#3-real-time-anomaly-detection-system", badge: "ml" },
+        { name: "Sales Forecasting", desc: "Time series, A/B testing", link: "/docs/knowledge-base/scenarios/#4-sales-forecasting-system", badge: "ml" },
+        { name: "Recommendation System", desc: "Collaborative filtering", link: "/docs/knowledge-base/scenarios/#5-recommendation-system", badge: "ml" },
+        { name: "AML Transaction Monitoring", desc: "Graph ML, explainability", link: "/docs/knowledge-base/scenarios/#6-aml-transaction-monitoring", badge: "ml" }
+      ],
+      codingPractice: [
+        { name: "Arrays & Strings", link: "/docs/coding-practice/by-topic/arrays-strings/", diff: "med" },
+        { name: "Dynamic Programming", link: "/docs/coding-practice/by-topic/dynamic-programming/", diff: "hard" },
+        { name: "Trees & Graphs", link: "/docs/coding-practice/by-topic/trees-graphs/", diff: "hard" },
+        { name: "Linked Lists", link: "/docs/coding-practice/by-topic/linked-lists/", diff: "med" },
+        { name: "Sorting & Searching", link: "/docs/coding-practice/by-topic/sorting-searching/", diff: "med" },
+        { name: "Math & Statistics", link: "/docs/coding-practice/by-topic/math-statistics/", diff: "easy" }
+      ],
+      careerFrameworks: [
+        { name: "Offer Decision Matrix", desc: "Compare job offers", link: "/docs/career-frameworks/offer-decision-matrix/" },
+        { name: "Negotiation Strategy", desc: "Compensation tactics", link: "/docs/career-frameworks/negotiation-strategy/" },
+        { name: "STAR Stories Guide", desc: "Behavioral interviews", link: "/docs/career-frameworks/star-stories-guide/" },
+        { name: "Strategy Template", desc: "Career planning", link: "/docs/career-frameworks/strategy-template/" }
+      ],
+      interviewTracking: [
+        { name: "Structure Guide", desc: "Organize your pipeline", link: "/docs/interview-tracking/" },
+        { name: "Round Template", desc: "Track interview rounds" },
+        { name: "Prep Tracker", desc: "Monitor preparation" },
+        { name: "Postmortem Template", desc: "Debrief interviews" },
+        { name: "Research Template", desc: "Company research" }
+      ],
+      promptTemplates: [
+        { name: "Interview Debrief", desc: "Post-interview analysis", link: "/docs/prompt-templates/interview-debrief/" },
+        { name: "Prep Drill Session", desc: "Timed practice", link: "/docs/prompt-templates/interview-prep-drill/" },
+        { name: "Setup Interview Round", desc: "Round prep", link: "/docs/prompt-templates/setup-interview-round/" },
+        { name: "New Company Setup", desc: "Company onboarding", link: "/docs/prompt-templates/new-company-setup/" },
+        { name: "Add Knowledge Topic", desc: "KB addition", link: "/docs/prompt-templates/add-knowledge-topic/" },
+        { name: "Check Broken Links", desc: "Link validation", link: "/docs/prompt-templates/check-broken-links/" }
+      ]
+    };
+
+    // ─── Mission Clock ──────────────────────────
+    function updateClock() {
+      const now = new Date();
+      const parts = {
+        y: now.getUTCFullYear(),
+        m: String(now.getUTCMonth() + 1).padStart(2, '0'),
+        d: String(now.getUTCDate()).padStart(2, '0'),
+        h: String(now.getUTCHours()).padStart(2, '0'),
+        min: String(now.getUTCMinutes()).padStart(2, '0'),
+        s: String(now.getUTCSeconds()).padStart(2, '0')
+      };
+      document.getElementById('missionClock').textContent =
+        `${parts.y}-${parts.m}-${parts.d}  ${parts.h}:${parts.min}:${parts.s} UTC`;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // ─── Populate Knowledge Base ────────────────
+    function buildKBPanel() {
+      const container = document.getElementById('kbCategories');
+      if (typeof knowledgeMapData === 'undefined') return;
+      const categories = knowledgeMapData.children || [];
+      categories.forEach(cat => {
+        const topicCount = cat.children ? cat.children.length : 0;
+        const catEl = document.createElement('div');
+        catEl.className = 'kb-cat';
+        catEl.innerHTML = `
+          <span class="kb-cat-name">${cat.name}</span>
+          <span class="kb-cat-count">${topicCount}</span>
+          <span class="kb-cat-chevron">&#9654;</span>
+        `;
+        container.appendChild(catEl);
+
+        const topicsEl = document.createElement('div');
+        topicsEl.className = 'kb-topics';
+        if (cat.children) {
+          cat.children.forEach(topic => {
+            const t = document.createElement('div');
+            t.className = 'kb-topic';
+            t.textContent = topic.name;
+            topicsEl.appendChild(t);
+          });
+        }
+        container.appendChild(topicsEl);
+
+        catEl.addEventListener('click', () => {
+          const wasExpanded = catEl.classList.contains('expanded');
+          // Close all
+          container.querySelectorAll('.kb-cat').forEach(c => c.classList.remove('expanded'));
+          container.querySelectorAll('.kb-topics').forEach(t => t.classList.remove('show'));
+          if (!wasExpanded) {
+            catEl.classList.add('expanded');
+            topicsEl.classList.add('show');
+          }
+        });
+      });
+    }
+
+    // ─── Populate Lists ─────────────────────────
+    function populateList(id, items, opts = {}) {
+      const ul = document.getElementById(id);
+      if (!ul) return;
+      items.forEach(item => {
+        const li = document.createElement('li');
+        const nameEl = item.link
+          ? `<a href="${item.link}">${item.name}</a>`
+          : `<span>${item.name}</span>`;
+        let extra = '';
+        if (opts.badges && item.badge) {
+          extra = `<span class="badge badge-${item.badge}">${item.badge}</span>`;
+        }
+        if (opts.difficulty && item.diff) {
+          const labels = { easy: 'EASY', med: 'MED', hard: 'HARD' };
+          extra = `<span class="difficulty diff-${item.diff}">${labels[item.diff]}</span>`;
+        }
+        if (item.desc) {
+          extra += `<span class="item-desc">${item.desc}</span>`;
+        }
+        li.innerHTML = nameEl + extra;
+        ul.appendChild(li);
+      });
+    }
+
+    // ─── Boot Sequence ──────────────────────────
+    function bootPanels() {
+      const panels = document.querySelectorAll('.panel');
+      panels.forEach((panel, i) => {
+        const delay = parseInt(panel.dataset.boot || i) * 150 + 200;
+        setTimeout(() => {
+          panel.classList.add('boot-anim', 'booted');
+        }, delay);
+      });
+
+      // Animate stat counters after panels boot
+      setTimeout(animateCounters, panels.length * 150 + 400);
+
+      // Animate progress bars
+      setTimeout(() => {
+        document.querySelectorAll('.progress-bar-fill').forEach(bar => {
+          bar.style.width = bar.dataset.width + '%';
+        });
+      }, panels.length * 150 + 600);
+    }
+
+    function animateCounters() {
+      document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+        const target = parseInt(el.dataset.target);
+        const duration = 800;
+        const start = performance.now();
+        el.classList.add('counting');
+
+        function tick(now) {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(target * eased);
+          if (progress < 1) {
+            requestAnimationFrame(tick);
+          } else {
+            el.textContent = target;
+            el.classList.remove('counting');
+          }
+        }
+        requestAnimationFrame(tick);
+      });
+    }
+
+    // ─── Command Palette ────────────────────────
+    function buildSearchIndex() {
+      const items = [];
+
+      // KB topics
+      if (typeof knowledgeMapData !== 'undefined') {
+        const cats = knowledgeMapData.children || [];
+        cats.forEach(cat => {
+          items.push({ name: cat.name, section: 'Knowledge Base', link: '/docs/knowledge-base/' });
+          if (cat.children) {
+            cat.children.forEach(topic => {
+              items.push({ name: topic.name, section: cat.name, link: '/docs/knowledge-base/' });
+            });
+          }
+        });
+      }
+
+      // System Design
+      missionData.systemDesign.forEach(s => {
+        items.push({ name: s.name, section: 'System Design', link: s.link });
+      });
+
+      // Coding
+      missionData.codingPractice.forEach(s => {
+        items.push({ name: s.name, section: 'Coding Drills', link: s.link });
+      });
+
+      // Career
+      missionData.careerFrameworks.forEach(s => {
+        items.push({ name: s.name, section: 'Career Frameworks', link: s.link });
+      });
+
+      // Tracking
+      missionData.interviewTracking.forEach(s => {
+        items.push({ name: s.name, section: 'Interview Tracking', link: s.link || '/docs/interview-tracking/' });
+      });
+
+      // Prompts
+      missionData.promptTemplates.forEach(s => {
+        items.push({ name: s.name, section: 'AI Workflows', link: s.link });
+      });
+
+      return items;
+    }
+
+    let searchIndex = [];
+    let selectedIdx = 0;
+
+    function openCommandPalette() {
+      const overlay = document.getElementById('commandOverlay');
+      const input = document.getElementById('commandInput');
+      overlay.classList.add('open');
+      input.value = '';
+      input.focus();
+      renderResults('');
+    }
+
+    function closeCommandPalette() {
+      document.getElementById('commandOverlay').classList.remove('open');
+    }
+
+    function renderResults(query) {
+      const container = document.getElementById('commandResults');
+      const q = query.toLowerCase().trim();
+      let filtered = q
+        ? searchIndex.filter(item =>
+            item.name.toLowerCase().includes(q) ||
+            item.section.toLowerCase().includes(q)
+          )
+        : searchIndex.slice(0, 20);
+
+      selectedIdx = 0;
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="command-empty">No matching resources found.</div>';
+        return;
+      }
+
+      container.innerHTML = filtered.slice(0, 30).map((item, i) => `
+        <div class="command-result${i === 0 ? ' selected' : ''}" data-idx="${i}" data-link="${item.link || ''}">
+          <span class="command-result-icon">${item.section.substring(0, 6)}</span>
+          <span class="command-result-name">${item.name}</span>
+          <span class="command-result-section">${item.section}</span>
+        </div>
+      `).join('');
+
+      container.querySelectorAll('.command-result').forEach(el => {
+        el.addEventListener('click', () => {
+          const link = el.dataset.link;
+          if (link) window.location.href = link;
+          closeCommandPalette();
+        });
+      });
+    }
+
+    function handlePaletteKeys(e) {
+      const results = document.querySelectorAll('.command-result');
+      if (!results.length) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        results[selectedIdx]?.classList.remove('selected');
+        selectedIdx = (selectedIdx + 1) % results.length;
+        results[selectedIdx]?.classList.add('selected');
+        results[selectedIdx]?.scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        results[selectedIdx]?.classList.remove('selected');
+        selectedIdx = (selectedIdx - 1 + results.length) % results.length;
+        results[selectedIdx]?.classList.add('selected');
+        results[selectedIdx]?.scrollIntoView({ block: 'nearest' });
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const sel = results[selectedIdx];
+        if (sel) {
+          const link = sel.dataset.link;
+          if (link) window.location.href = link;
+          closeCommandPalette();
+        }
+      }
+    }
+
+    // ─── Event Listeners ────────────────────────
+    document.getElementById('commandTrigger').addEventListener('click', openCommandPalette);
+
+    document.getElementById('commandOverlay').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeCommandPalette();
+    });
+
+    document.getElementById('commandInput').addEventListener('input', (e) => {
+      renderResults(e.target.value);
+    });
+
+    document.getElementById('commandInput').addEventListener('keydown', handlePaletteKeys);
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        const overlay = document.getElementById('commandOverlay');
+        if (overlay.classList.contains('open')) {
+          closeCommandPalette();
+        } else {
+          openCommandPalette();
+        }
+      }
+      if (e.key === 'Escape') {
+        closeCommandPalette();
+      }
+    });
+
+    // ─── Initialize ─────────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      buildKBPanel();
+      populateList('sysDesignList', missionData.systemDesign, { badges: true });
+      populateList('codingList', missionData.codingPractice, { difficulty: true });
+      populateList('careerList', missionData.careerFrameworks);
+      populateList('trackingList', missionData.interviewTracking);
+      populateList('promptList', missionData.promptTemplates);
+      searchIndex = buildSearchIndex();
+      bootPanels();
+    });
+  </script>
+
+</body>
+</html>

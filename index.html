@@ -380,6 +380,7 @@
     .site-footer.visible { display: block; }
     .site-footer a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
     .site-footer a:hover { color: var(--accent); }
+    .beta-badge { display:inline-block; font-size:9px; font-weight:600; letter-spacing:0.5px; padding:1px 5px; border-radius:4px; background:var(--accent); color:#fff; vertical-align:middle; margin-left:3px; line-height:1.4; }
   </style>
 </head>
 <body>
@@ -402,6 +403,12 @@
         <a class="hero-btn hero-btn-secondary" href="/docs/">Browse Documentation &rarr;</a>
         <a class="hero-btn hero-btn-secondary" href="https://github.com/prasanth-ntu/ml-interview-prep-kit" target="_blank">GitHub</a>
       </div>
+      <div class="hero-links" style="margin-top:8px;">
+        <span style="color:var(--text-muted);font-size:13px;margin-right:4px;">Overview Prototypes <span class="beta-badge">BETA</span>:</span>
+        <a href="/overview-prototypes/bento.html">Bento Grid</a>
+        <a href="/overview-prototypes/skilltree.html">Skill Tree</a>
+        <a href="/overview-prototypes/mission.html">Mission Control</a>
+      </div>
       <div class="hero-links">
         <a href="https://github.com/prasanth-ntu/ml-interview-prep-kit/tree/main/knowledge-base">Knowledge Base</a>
         <a href="https://github.com/prasanth-ntu/ml-interview-prep-kit/tree/main/coding-practice">Coding Practice</a>
@@ -420,6 +427,10 @@
         <a href="/" class="active">Mind Map</a>
         <span class="nav-sep"></span>
         <a href="/docs/">Docs</a>
+        <span class="nav-sep"></span>
+        <a href="/overview-prototypes/bento.html">Bento <span class="beta-badge">BETA</span></a>
+        <a href="/overview-prototypes/skilltree.html">Skill Tree <span class="beta-badge">BETA</span></a>
+        <a href="/overview-prototypes/mission.html">Mission <span class="beta-badge">BETA</span></a>
       </nav>
     </div>
     <div class="top-bar-links">

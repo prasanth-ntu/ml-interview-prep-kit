@@ -54,6 +54,9 @@ jobs:
           # MkDocs docs site at /docs/
           cp -r _site/* _deploy/docs/
 
+          # Overview prototypes at /overview-prototypes/
+          cp -r overview-prototypes _deploy/overview-prototypes
+
       - uses: actions/configure-pages@v4
 
       - uses: actions/upload-pages-artifact@v3
