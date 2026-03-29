@@ -81,6 +81,7 @@ nav:
     - Add Knowledge Topic: prompt-templates/add-knowledge-topic.md
     - Check Broken Links: prompt-templates/check-broken-links.md
   - Contributing: CONTRIBUTING.md
+  - Roadmap: ROADMAP.md
 
 plugins:
   - search

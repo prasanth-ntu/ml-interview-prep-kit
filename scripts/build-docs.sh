@@ -27,6 +27,7 @@ done
 # Copy root markdown files
 cp "$REPO_ROOT/README.md" "$DOCS_DIR/index.md"
 cp "$REPO_ROOT/CONTRIBUTING.md" "$DOCS_DIR/CONTRIBUTING.md"
+cp "$REPO_ROOT/ROADMAP.md" "$DOCS_DIR/ROADMAP.md"
 
 # Fix mind map links: absolute → relative (../), so they work in both local dev and production
 # README.md keeps absolute URLs for GitHub rendering; docs index.md needs relative paths
