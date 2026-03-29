@@ -7,7 +7,7 @@
 (function () {
   "use strict";
 
-  const MAP_BASE_URL = "/";
+  const MAP_BASE_URL = "/mindmap.html";
   const KB_PATH = "knowledge-base/ml-ds-llm-fundamentals/";
 
   function isKBPage() {

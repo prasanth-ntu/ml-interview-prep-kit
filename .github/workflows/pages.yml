@@ -47,10 +47,14 @@ jobs:
           # Create final deploy directory
           mkdir -p _deploy/docs
 
-          # Mind map landing page at root
+          # Landing page + mind map at root
           cp index.html _deploy/
+          cp mindmap.html _deploy/
           cp ml-knowledge-map-data.js _deploy/
           cp CNAME _deploy/
+
+          # Preview assets for landing page
+          [ -d assets ] && cp -r assets _deploy/assets
 
           # MkDocs docs site at /docs/
           cp -r _site/* _deploy/docs/
