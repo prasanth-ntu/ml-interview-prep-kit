@@ -36,6 +36,7 @@ jobs:
           done
           cp README.md _docs/index.md
           cp CONTRIBUTING.md _docs/CONTRIBUTING.md
+          cp ROADMAP.md _docs/ROADMAP.md
           [ -d docs-assets ] && cp -r docs-assets _docs/docs-assets
 
       - name: Build MkDocs

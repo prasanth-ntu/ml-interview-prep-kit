@@ -336,11 +336,17 @@
       transition: color 0.2s;
       z-index: 1;
     }
-    .scroll-indicator:hover { color: var(--accent); }
+    .scroll-indicator:hover { color: var(--text-primary); }
     .scroll-indicator svg {
-      width: 20px;
-      height: 20px;
+      width: 24px;
+      height: 24px;
       animation: bounce-down 2s ease-in-out infinite;
+    }
+    .scroll-indicator span {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
     @keyframes bounce-down {
       0%, 100% { transform: translateY(0); opacity: 0.6; }
@@ -843,7 +849,7 @@
       .kb-categories { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
       .footer { flex-direction: column; text-align: center; }
       .command-hint kbd { display: none; }
-      .scroll-indicator { display: none; }
+      .scroll-indicator { bottom: 16px; font-size: 11px; }
       .hero-mesh { animation: none; }
       body::before { display: none; }
       .glass, .hero-badge, .command-hint {
@@ -1324,7 +1330,8 @@
     // ─── Theme Toggle ─────────────────────────────────
     function initTheme() {
       const saved = localStorage.getItem('ml-prep-theme');
-      if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      // Default to dark mode; only use light if explicitly saved as 'light'
+      if (saved !== 'light') {
         document.documentElement.classList.add('dark');
       }
       document.getElementById('themeToggle').addEventListener('click', () => {
