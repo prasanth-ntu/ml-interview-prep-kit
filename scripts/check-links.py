@@ -82,14 +82,14 @@ def extract_headings(file_path: Path) -> set[str]:
         match = re.match(r"^#{1,6}\s+(.+)$", line)
         if match:
             heading = match.group(1).strip()
-            # GitHub-style anchor conversion
+            # MkDocs / Python-Markdown toc-style anchor conversion
             # 1. Lowercase
             anchor = heading.lower()
             # 2. Remove everything except alphanumeric, spaces, hyphens
             anchor = re.sub(r"[^\w\s-]", "", anchor)
-            # 3. Replace each space with a hyphen individually (do NOT collapse —
-            #    GitHub preserves double hyphens, e.g., "CI/CD & MLOps" → "cicd--mlops")
-            anchor = anchor.replace(" ", "-")
+            # 3. Replace spaces/hyphens runs with a single hyphen
+            #    (Python-Markdown collapses consecutive hyphens, unlike GitHub)
+            anchor = re.sub(r"[-\s]+", "-", anchor)
             anchor = anchor.strip("-")
             headings.add(anchor)
     return headings

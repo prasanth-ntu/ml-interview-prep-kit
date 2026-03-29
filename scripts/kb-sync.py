@@ -194,6 +194,12 @@ def parse_fundamentals(text: str) -> list[dict]:
 
         oneliner = parse_oneliner(section)
 
+        # Extract raw content: strip @mindmap block, keep the rest
+        content = re.sub(r"<!--\s*@mindmap\s*\n.*?-->\s*\n?", "", section, flags=re.DOTALL)
+        # Strip the H1 heading line itself
+        content = re.sub(r"^# .+\n?", "", content)
+        content = content.strip()
+
         topic = {
             "heading": heading,
             "name": mindmap["name"] or heading,
@@ -201,6 +207,7 @@ def parse_fundamentals(text: str) -> list[dict]:
             "category": mindmap["category"],
             "related": mindmap["related"],
             "children": mindmap["children"],
+            "content": content,
         }
         topics.append(topic)
 
@@ -232,6 +239,8 @@ def build_tree(categories: dict[str, str], topics: list[dict]) -> dict:
             topic_node = {"name": topic["name"], "desc": topic["desc"]}
             if topic["related"]:
                 topic_node["related"] = topic["related"]
+            if topic.get("content"):
+                topic_node["content"] = topic["content"]
             if topic["children"]:
                 topic_node["children"] = topic["children"]
             cat_node["children"].append(topic_node)
@@ -313,6 +322,8 @@ def clean_for_json(node: dict) -> dict:
     cleaned = {"name": node["name"], "desc": node["desc"]}
     if node.get("related"):
         cleaned["related"] = node["related"]
+    if node.get("content"):
+        cleaned["content"] = node["content"]
     if node.get("children"):
         cleaned["children"] = [clean_for_json(c) for c in node["children"]]
     return cleaned

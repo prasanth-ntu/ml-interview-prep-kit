@@ -15,3 +15,9 @@ _serve/
 
 # Scrubbing scripts (one-time migration, not for public repo)
 scripts/scrub-kb.py
+
+# Playwright MCP temp files
+.playwright-mcp/
+
+# Temp screenshots
+v2-quickread-*.png

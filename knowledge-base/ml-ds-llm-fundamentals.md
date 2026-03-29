@@ -435,7 +435,7 @@ $J(w) = |Xw - y|^2 + \alpha \left( \rho |w| + (1-\rho) |w|^2 \right)$
     - Penalises the euclidean distance of $w$ (i.e. $\alpha |w|^{2}$).
     - The Ridge model makes a trade-off between the model simplicity (near-zero $w$ coefficients) and its performance on training set, by tuning regularization parameter $\alpha$.
     - If $\alpha$ is too small (close to 0), we end up with Linear Regression model.
-        -  $J(w) = min_{w}|Xw-y|^{2} + \alpha |w|^{2} = min_{w}|Xw-y|^{2} + 0*|w|^{2} = min_{w}|Xw-y|^{2}$.
+        -  $$\begin{aligned} J(w) &= \min_{w}|Xw-y|^{2} + \alpha |w|^{2} \\ &= \min_{w}|Xw-y|^{2} + 0 \cdot |w|^{2} \\ &= \min_{w}|Xw-y|^{2} \end{aligned}$$
     - With enough training data, regularization becomes less important as Linear regression catches up with ridge as with more data, it gets harder for model to overfit.
     - If we have fewer features, ridge regression is the first choice.
 - **Lasso Regression**

@@ -42,7 +42,8 @@ cp -r interview-tracking/_example-company interview-tracking/your-company
 
 ```
 ml-interview-prep-kit/
-├── index.html                         # Interactive mind map (interview.prasanth.io)
+├── index.html                         # Interactive mind map v2 (interview.prasanth.io)
+├── index-v1.html                      # Archived v1 mind map
 ├── knowledge-base/
 │   ├── ml-ds-llm-fundamentals.md      # 100+ topics — the core reference
 │   ├── scenarios.md                   # 6 ML system design scenarios
