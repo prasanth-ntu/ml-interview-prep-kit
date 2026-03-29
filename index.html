@@ -75,7 +75,7 @@
       --radius: 0.625rem;
 
       /* Glass morphism tokens */
-      --glass-bg: rgba(255, 255, 255, 0.72);
+      --glass-bg: rgba(255, 255, 255, 0.88);
       --glass-border: rgba(255, 255, 255, 0.22);
       --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
       --glass-blur: 14px;
@@ -113,7 +113,7 @@
       --l4-stroke: #c084fc;
       --related-link: #c084fc;
 
-      --glass-bg: rgba(30, 41, 59, 0.78);
+      --glass-bg: rgba(30, 41, 59, 0.92);
       --glass-border: rgba(71, 85, 105, 0.35);
       --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
 
@@ -828,7 +828,7 @@
         <button onclick="toggleFeature('badges')" id="btn-badges" class="toggle-on">Badges</button>
         <button onclick="toggleFeature('minimap')" id="btn-minimap">Map</button>
         <button onclick="toggleFeature('tooltips')" id="btn-tooltips" class="toggle-on">Tips</button>
-        <button onclick="toggleFeature('autoQuickRead')" id="btn-autoQuickRead">Auto Read</button>
+        <button onclick="toggleFeature('autoQuickRead')" id="btn-autoQuickRead" class="toggle-on">Auto Read</button>
       </div>
     </div>
     <div class="controls-stats">
@@ -877,6 +877,7 @@
       controlsOpen = !controlsOpen;
       const panel = document.getElementById('controlsPanel');
       panel.classList.toggle('collapsed', !controlsOpen);
+      panel.classList.toggle('force-show', controlsOpen);
     }
 
     // Update hero topic count from actual data
@@ -891,7 +892,7 @@
     }
 
     // ─── State ──────────────────────────────────────────
-    const features = { badges: true, minimap: false, tooltips: true, autoQuickRead: false };
+    const features = { badges: true, minimap: false, tooltips: true, autoQuickRead: true };
     let isDarkMode = true; // dark by default in v2
     let currentLayout = 'radial';
     let currentDepth = 2; // initial expand depth
@@ -1680,12 +1681,14 @@
     }
     setLayout('radial');
 
-    // SVG fade-in
+    // SVG fade-in + fit to screen
     requestAnimationFrame(() => {
       setTimeout(() => {
         const svgEl = document.querySelector('#container svg');
         if (svgEl) svgEl.classList.add('loaded');
         document.getElementById('mapLoading').classList.add('hidden');
+        // Fit map to screen on initial load
+        setTimeout(() => fitToScreen(), 200);
       }, 300);
     });
 
