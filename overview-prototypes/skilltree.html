@@ -8,7 +8,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ML Interview Prep Kit — Skill Tree</title>
   <meta name="description" content="RPG-style skill tree for ML interview preparation. Explore 100+ ML/AI/DS topics across knowledge base, system design, coding, and career frameworks.">
   <meta name="theme-color" content="#0a0e1a">
@@ -549,15 +549,89 @@
     .footer a { color: var(--text-secondary); text-decoration: none; }
     .footer a:hover { color: var(--text-primary); }
 
+    /* ─── Hamburger Menu ────────────────────────────── */
+    .mobile-menu-btn {
+      display: none; width: 34px; height: 34px; border-radius: 8px; cursor: pointer;
+      border: 1px solid var(--bg-panel-border); background: transparent;
+      color: var(--text-secondary); align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .mobile-menu-btn:hover { color: var(--text-primary); background: rgba(255,255,255,0.06); }
+    .mobile-menu-btn svg { width: 20px; height: 20px; }
+    .mobile-drawer-backdrop {
+      display: none; position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,0.6); opacity: 0; transition: opacity 0.3s;
+    }
+    .mobile-drawer-backdrop.open { display: block; opacity: 1; }
+    .mobile-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; width: min(300px, 80vw);
+      z-index: 301; background: var(--bg-dark); border-left: 1px solid var(--bg-panel-border);
+      transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 20px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto;
+    }
+    .mobile-drawer.open { transform: translateX(0); }
+    .mobile-drawer-close {
+      align-self: flex-end; width: 36px; height: 36px; border-radius: 8px;
+      border: 1px solid var(--bg-panel-border); background: transparent;
+      color: var(--text-secondary); cursor: pointer; display: flex;
+      align-items: center; justify-content: center; font-size: 18px;
+      margin-bottom: 12px; transition: all 0.2s;
+    }
+    .mobile-drawer-close:hover { color: var(--text-primary); }
+    .mobile-drawer a {
+      display: block; padding: 12px 16px; border-radius: 10px;
+      font-size: 15px; font-weight: 500; color: var(--text-primary);
+      text-decoration: none; transition: background 0.15s;
+    }
+    .mobile-drawer a:hover { background: rgba(255,255,255,0.06); }
+    .mobile-drawer a.active { color: var(--glow-gold); background: rgba(251,191,36,0.1); }
+
     /* ─── Responsive ─────────────────────────────────── */
     @media (max-width: 768px) {
       .topbar-nav { display: none; }
-      .search-box input { width: 140px; }
-      .search-box input:focus { width: 180px; }
-      .info-panel { width: 100%; }
-      .legend { bottom: 50px; left: 10px; padding: 10px 12px; min-width: 150px; }
+      .mobile-menu-btn { display: flex; }
+      .search-box input { width: min(140px, 30vw); font-size: 16px; }
+      .search-box input:focus { width: min(180px, 40vw); }
+      .info-panel {
+        top: auto; right: 0; bottom: 0; left: 0;
+        width: 100%; max-height: 55vh;
+        border-radius: 16px 16px 0 0; border-left: none;
+        border-top: 1px solid var(--bg-panel-border);
+      }
+      .info-panel-close { width: 44px; height: 44px; font-size: 24px; }
+      .legend { bottom: 12px; left: 10px; padding: 10px 12px; min-width: 140px; }
       .legend-item { font-size: 12px; }
       .footer { display: none; }
+      .zoom-controls { bottom: 16px; right: 12px; }
+      .topbar { backdrop-filter: none; -webkit-backdrop-filter: none; }
+      .info-panel { backdrop-filter: none; -webkit-backdrop-filter: none; }
+      .legend { backdrop-filter: none; -webkit-backdrop-filter: none; }
+      .tooltip { backdrop-filter: none; -webkit-backdrop-filter: none; }
+      .central-node-circle { animation: none; }
+      .st-link.animated { animation: none; }
+    }
+    @media (max-width: 480px) {
+      .topbar { padding: 0 12px; height: 48px; }
+      .topbar-brand { font-size: 13px; }
+      .legend { min-width: 120px; padding: 8px 10px; }
+      .legend h4 { font-size: 9px; }
+      .legend-item { font-size: 11px; }
+      .info-panel { max-height: 60vh; padding: 20px 16px; }
+    }
+    /* ─── Touch Devices ─────────────────────────────── */
+    @media (hover: none) {
+      .tooltip { display: none !important; }
+      .st-node:hover .node-circle { filter: none; }
+      .st-node:hover .node-label { fill: var(--text-secondary); }
+    }
+
+    /* ─── Reduced Motion ────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
   </style>
 </head>
@@ -592,8 +666,23 @@
       <button class="icon-btn" id="themeToggle" title="Toggle theme">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" id="themeIcon"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
+      <button class="mobile-menu-btn" onclick="openMobileDrawer()" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
     </div>
   </header>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-drawer-backdrop" id="mobileBackdrop" onclick="closeMobileDrawer()"></div>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <button class="mobile-drawer-close" onclick="closeMobileDrawer()">&times;</button>
+    <a href="/overview-prototypes/skilltree.html" class="active">Skill Tree</a>
+    <a href="/">Mind Map</a>
+    <a href="/docs/">Documentation</a>
+    <a href="/overview-prototypes/bento.html">Bento Grid</a>
+    <a href="/overview-prototypes/mission.html">Mission Control</a>
+    <a href="https://github.com/prasanth-ntu/ml-interview-prep-kit" target="_blank">GitHub</a>
+  </div>
 
   <!-- ─── Starfield ───────────────────────────────── -->
   <canvas id="starfield"></canvas>
@@ -665,6 +754,19 @@
   <script src="../ml-knowledge-map-data.js"></script>
 
   <script>
+  // ─── Mobile Drawer ─────────────────────────────────
+  function openMobileDrawer() {
+    document.getElementById('mobileBackdrop').classList.add('open');
+    document.getElementById('mobileDrawer').classList.add('open');
+  }
+  function closeMobileDrawer() {
+    document.getElementById('mobileBackdrop').classList.remove('open');
+    document.getElementById('mobileDrawer').classList.remove('open');
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && document.getElementById('mobileDrawer').classList.contains('open')) closeMobileDrawer();
+  });
+
   (function() {
     'use strict';
 

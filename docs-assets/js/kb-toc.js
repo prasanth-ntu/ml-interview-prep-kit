@@ -127,10 +127,10 @@
       ".custom-toc-list { max-height: calc(100vh - 6rem); overflow-y: auto; scrollbar-width: thin; padding: 0 0.2rem; }" +
       ".custom-toc-list::-webkit-scrollbar { width: 3px; }" +
       ".custom-toc-list::-webkit-scrollbar-thumb { background: var(--md-default-fg-color--lightest); border-radius: 3px; }" +
-      ".md-sidebar--secondary { width: 14rem; }" +
+      "@media (min-width: 76.25em) { .md-sidebar--secondary { width: 14rem; } }" +
 
       /* H1 topic links */
-      ".toc-h1 { font-size: 0.6rem !important; padding: 0.25rem 0.5rem !important; line-height: 1.4 !important; border-left: 2px solid transparent; transition: all 0.15s; display: flex; align-items: center; justify-content: space-between; gap: 4px; }" +
+      ".toc-h1 { font-size: 0.7rem !important; padding: 0.25rem 0.5rem !important; line-height: 1.4 !important; min-height: 36px; border-left: 2px solid transparent; transition: all 0.15s; display: flex; align-items: center; justify-content: space-between; gap: 4px; }" +
       ".toc-h1:hover { border-left-color: var(--md-accent-fg-color); background: var(--md-code-bg-color); }" +
       ".toc-h1.active { border-left-color: var(--md-accent-fg-color); color: var(--md-accent-fg-color) !important; font-weight: 600; background: var(--md-code-bg-color); }" +
 
@@ -143,7 +143,7 @@
       ".toc-topic.expanded .toc-h2-list { display: block; }" +
 
       /* H2 subtopic links */
-      ".toc-h2 { font-size: 0.55rem !important; padding: 0.15rem 0.5rem 0.15rem 0.7rem !important; line-height: 1.3 !important; color: var(--md-default-fg-color--light) !important; border-left: 1px solid var(--md-default-fg-color--lightest); transition: all 0.15s; display: block; }" +
+      ".toc-h2 { font-size: 0.65rem !important; padding: 0.15rem 0.5rem 0.15rem 0.7rem !important; line-height: 1.3 !important; min-height: 32px; display: flex; align-items: center; color: var(--md-default-fg-color--light) !important; border-left: 1px solid var(--md-default-fg-color--lightest); transition: all 0.15s; }" +
       ".toc-h2:hover { color: var(--md-default-fg-color) !important; border-left-color: var(--md-accent-fg-color); }" +
       ".toc-h2.active { color: var(--md-accent-fg-color) !important; border-left-color: var(--md-accent-fg-color); font-weight: 500; }";
 

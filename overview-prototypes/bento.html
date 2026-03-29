@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>ML Interview Prep Kit — Overview</title>
   <meta name="description" content="Your complete ML interview preparation toolkit — 104 topics, 6 system designs, coding practice, career frameworks, and AI workflows.">
   <meta name="theme-color" content="#0f172a">
@@ -315,6 +315,40 @@
       background: var(--bg-tertiary);
       border: 1px solid var(--border-color);
       font-weight: 600;
+    }
+
+    /* ─── Scroll Indicator ──────────────────────────── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      animation: fade-in 1s ease 1.5s both;
+      cursor: pointer;
+      transition: color 0.2s;
+      z-index: 1;
+    }
+    .scroll-indicator:hover { color: var(--accent); }
+    .scroll-indicator svg {
+      width: 20px;
+      height: 20px;
+      animation: bounce-down 2s ease-in-out infinite;
+    }
+    @keyframes bounce-down {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50% { transform: translateY(6px); opacity: 1; }
+    }
+    @keyframes fade-in {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     /* ─── Bento Grid ────────────────────────────────── */
@@ -754,32 +788,86 @@
     .badge-pt { background: rgba(244,63,94,0.12); color: #f43f5e; }
     .badge-cs { background: rgba(5,150,105,0.12); color: #059669; }
 
+    /* ─── Hamburger Menu ────────────────────────────── */
+    .mobile-menu-btn {
+      display: none; width: 40px; height: 40px; border-radius: 8px; cursor: pointer;
+      border: 1px solid var(--border-color); background: var(--bg-secondary);
+      color: var(--text-secondary); align-items: center; justify-content: center;
+      transition: all 0.2s; flex-shrink: 0;
+    }
+    .mobile-menu-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .mobile-menu-btn svg { width: 20px; height: 20px; }
+    .mobile-drawer-backdrop {
+      display: none; position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s;
+    }
+    .mobile-drawer-backdrop.open { display: block; opacity: 1; }
+    .mobile-drawer {
+      position: fixed; top: 0; right: 0; bottom: 0; width: min(300px, 80vw);
+      z-index: 301; background: var(--bg-secondary); border-left: 1px solid var(--border-color);
+      transform: translateX(100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      padding: 20px; display: flex; flex-direction: column; gap: 4px; overflow-y: auto;
+    }
+    .mobile-drawer.open { transform: translateX(0); }
+    .mobile-drawer-close {
+      align-self: flex-end; width: 36px; height: 36px; border-radius: 8px;
+      border: 1px solid var(--border-color); background: transparent;
+      color: var(--text-secondary); cursor: pointer; display: flex;
+      align-items: center; justify-content: center; font-size: 18px;
+      margin-bottom: 12px; transition: all 0.2s;
+    }
+    .mobile-drawer-close:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+    .mobile-drawer a {
+      display: block; padding: 12px 16px; border-radius: 10px;
+      font-size: 15px; font-weight: 500; color: var(--text-primary);
+      text-decoration: none; transition: background 0.15s;
+    }
+    .mobile-drawer a:hover { background: var(--bg-tertiary); }
+    .mobile-drawer a.active { color: var(--accent); background: rgba(59, 130, 246, 0.08); }
+
     /* ─── Responsive ────────────────────────────────── */
     @media (max-width: 1024px) {
-      .bento-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .bento-card--large {
-        grid-column: span 2;
-        grid-row: span 1;
-      }
+      .bento-grid { grid-template-columns: repeat(2, 1fr); }
+      .bento-card--large { grid-column: span 2; grid-row: span 1; }
       .hero-stats { gap: 32px; }
     }
     @media (max-width: 768px) {
-      .bento-grid {
-        grid-template-columns: 1fr;
-      }
-      .bento-card--large,
-      .bento-card--medium {
-        grid-column: span 1;
-        grid-row: span 1;
-      }
+      .bento-grid { grid-template-columns: 1fr; }
+      .bento-card--large, .bento-card--medium { grid-column: span 1; grid-row: span 1; }
       .hero h1 { font-size: 2rem; }
-      .hero-stats { gap: 24px; }
-      .hero-stat-number { font-size: 1.8rem; }
+      .hero { padding: 100px 20px 60px; min-height: auto; }
+      .hero-stats { gap: 20px; }
+      .hero-stat-number { font-size: 1.6rem; }
       .nav-links { display: none; }
+      .mobile-menu-btn { display: flex; }
       .kb-categories { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
       .footer { flex-direction: column; text-align: center; }
+      .command-hint kbd { display: none; }
+      .scroll-indicator { display: none; }
+      .hero-mesh { animation: none; }
+      body::before { display: none; }
+      .glass, .hero-badge, .command-hint {
+        backdrop-filter: none; -webkit-backdrop-filter: none;
+      }
+    }
+    @media (max-width: 480px) {
+      .bento-section { padding: 0 16px 40px; }
+      .bento-card { padding: 20px; border-radius: 12px; }
+      .kb-categories { grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); }
+      .hero h1 { font-size: 1.75rem; }
+      .hero-stat-number { font-size: 1.4rem; }
+      .card-title { font-size: 16px; }
+      .nav-inner { padding: 0 16px; height: 48px; }
+      .nav-brand { font-size: 13px; }
+      .command-input { font-size: 16px; }
+    }
+    /* ─── Touch Devices ─────────────────────────────── */
+    @media (hover: none) {
+      .bento-card:hover { transform: none; box-shadow: var(--card-shadow); border-color: var(--glass-border); }
+      .bento-card.revealed:hover { transform: none; }
+      .item-card:hover { transform: none; }
+      .prompt-chain-item:hover { transform: none; }
+      .kb-cat:hover { background: var(--bg-tertiary); border-color: var(--border-color); }
     }
 
     /* ─── Scroll reveal transition ──────────────────── */
@@ -837,6 +925,15 @@
       font-weight: 700;
       color: #06b6d4;
     }
+
+    /* ─── Reduced Motion ────────────────────────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -862,9 +959,24 @@
             <circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
           </svg>
         </button>
+        <button class="mobile-menu-btn" onclick="openMobileDrawer()" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
       </div>
     </div>
   </nav>
+
+  <!-- Mobile Navigation Drawer -->
+  <div class="mobile-drawer-backdrop" id="mobileBackdrop" onclick="closeMobileDrawer()"></div>
+  <div class="mobile-drawer" id="mobileDrawer">
+    <button class="mobile-drawer-close" onclick="closeMobileDrawer()">&times;</button>
+    <a href="/overview-prototypes/bento.html" class="active">Overview</a>
+    <a href="/">Mind Map</a>
+    <a href="/docs/">Documentation</a>
+    <a href="/overview-prototypes/skilltree.html">Skill Tree</a>
+    <a href="/overview-prototypes/mission.html">Mission Control</a>
+    <a href="https://github.com/prasanth-ntu/ml-interview-prep-kit" target="_blank">GitHub</a>
+  </div>
 
   <!-- Hero -->
   <section class="hero">
@@ -900,6 +1012,10 @@
         <kbd>&#8984;K</kbd>
       </div>
     </div>
+    <a class="scroll-indicator" href="#bentoGrid" aria-label="Scroll to content">
+      <span>Explore</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5"/><path d="M7 6l5 5 5-5"/></svg>
+    </a>
   </section>
 
   <!-- Bento Grid -->
@@ -1325,6 +1441,19 @@
 
       document.getElementById('commandHintBtn').addEventListener('click', open);
     }
+
+    // ─── Mobile Drawer ─────────────────────────────────
+    function openMobileDrawer() {
+      document.getElementById('mobileBackdrop').classList.add('open');
+      document.getElementById('mobileDrawer').classList.add('open');
+    }
+    function closeMobileDrawer() {
+      document.getElementById('mobileBackdrop').classList.remove('open');
+      document.getElementById('mobileDrawer').classList.remove('open');
+    }
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.getElementById('mobileDrawer').classList.contains('open')) closeMobileDrawer();
+    });
 
     // ─── Init ─────────────────────────────────────────
     document.addEventListener('DOMContentLoaded', () => {
