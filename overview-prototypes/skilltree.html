@@ -605,8 +605,9 @@
       .legend-dot { width: 8px; height: 8px; }
       .footer { display: none; }
       .zoom-controls { bottom: 16px; right: 12px; z-index: 85; }
-      .info-panel.open ~ .legend { display: none; }
       .info-panel { z-index: 95; }
+      .info-panel.open ~ .legend { opacity: 0; pointer-events: none; }
+      .info-panel.open ~ .zoom-controls { bottom: calc(55vh + 8px); }
       .topbar { backdrop-filter: none; -webkit-backdrop-filter: none; }
       .info-panel { backdrop-filter: none; -webkit-backdrop-filter: none; }
       .legend { backdrop-filter: none; -webkit-backdrop-filter: none; }
