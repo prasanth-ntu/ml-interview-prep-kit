@@ -102,70 +102,38 @@
       pointer-events: none;
     }
 
-    /* ─── Navigation ────────────────────────────────── */
+    /* ─── Navigation (unified header) ──────────────── */
     .nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      background: var(--nav-bg);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      position: fixed; top: 0; left: 0; right: 0; height: 48px; z-index: 100;
+      background: var(--nav-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-color);
+      display: flex; align-items: center; padding: 0 16px; gap: 8px;
       transition: background 0.3s, border-color 0.3s;
     }
-    .nav-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 24px;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
     .nav-brand {
-      font-weight: 700;
-      font-size: 15px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px;
+      white-space: nowrap; color: var(--text-primary); text-decoration: none;
     }
+    .nav-brand em { color: var(--accent); font-style: normal; }
     .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      display: flex; align-items: center; gap: 4px;
     }
     .nav-link {
-      padding: 6px 14px;
-      border-radius: 8px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      transition: all 0.2s;
+      padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 500;
+      color: var(--text-secondary); transition: all 0.2s; white-space: nowrap;
     }
     .nav-link:hover { color: var(--text-primary); background: var(--bg-tertiary); }
-    .nav-link.active {
-      color: var(--accent);
-      background: rgba(59, 130, 246, 0.08);
-    }
+    .nav-link.active { color: var(--accent); background: rgba(59, 130, 246, 0.08); }
+    .nav-sep { width: 1px; height: 16px; background: var(--border-color); margin: 0 4px; }
+    .beta-badge { display:inline-block; font-size:9px; font-weight:600; letter-spacing:0.5px; padding:1px 5px; border-radius:4px; background:var(--accent); color:#fff; vertical-align:middle; margin-left:3px; line-height:1.4; }
     .nav-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      display: flex; align-items: center; gap: 8px; margin-left: auto;
     }
     .nav-icon-btn {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      border: 1px solid var(--border-color);
-      background: var(--bg-secondary);
-      color: var(--text-secondary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.2s;
+      width: 32px; height: 32px; border-radius: 6px;
+      border: 1px solid var(--border-color); background: transparent;
+      color: var(--text-secondary); display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: all 0.2s;
     }
     .nav-icon-btn:hover { border-color: var(--accent); color: var(--accent); }
     .nav-icon-btn svg { width: 18px; height: 18px; }
@@ -178,7 +146,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 120px 24px 80px;
+      padding: 100px 24px 80px;
       overflow: hidden;
     }
     .hero-mesh {
@@ -871,8 +839,9 @@
       .hero h1 { font-size: 1.75rem; }
       .hero-stat-number { font-size: 1.4rem; }
       .card-title { font-size: 16px; }
-      .nav-inner { padding: 0 16px; height: 48px; }
-      .nav-brand { font-size: 13px; }
+      .nav { padding: 0 12px; gap: 6px; }
+      .nav-brand { font-size: 12px; }
+      .nav-brand em { display: none; }
       .command-input { font-size: 16px; }
     }
     /* ─── Touch Devices ─────────────────────────────── */
@@ -894,7 +863,7 @@
 
     /* Card flex layout for bottom link */
     .bento-card { display: flex; flex-direction: column; }
-    .card-bottom { margin-top: auto; padding-top: 16px; }
+    .card-bottom { margin-top: auto; padding-top: 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 
     /* KB view map button */
     .btn-outline {
@@ -957,12 +926,15 @@
 
   <!-- Navigation -->
   <nav class="nav">
-    <div class="nav-inner">
-      <a href="/overview-bento.html" class="nav-brand">&#x1F9E0; ML Interview Prep Kit</a>
+      <a href="/" class="nav-brand"><span style="font-size:16px">🧠</span> ML Interview <em>Prep Kit</em></a>
       <div class="nav-links">
-        <a href="/overview-bento.html" class="nav-link active">Overview</a>
         <a href="/" class="nav-link">Mind Map</a>
+        <span class="nav-sep"></span>
         <a href="/docs/" class="nav-link">Docs</a>
+        <span class="nav-sep"></span>
+        <a href="/overview-prototypes/bento.html" class="nav-link active">Bento <span class="beta-badge">BETA</span></a>
+        <a href="/overview-prototypes/skilltree.html" class="nav-link">Skill Tree <span class="beta-badge">BETA</span></a>
+        <a href="/overview-prototypes/mission.html" class="nav-link">Mission <span class="beta-badge">BETA</span></a>
       </div>
       <div class="nav-actions">
         <a href="https://github.com/prasanth-ntu/ml-interview-prep-kit" target="_blank" rel="noopener" class="nav-icon-btn" title="GitHub">
@@ -977,7 +949,6 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
       </div>
-    </div>
   </nav>
 
   <!-- Mobile Navigation Drawer -->

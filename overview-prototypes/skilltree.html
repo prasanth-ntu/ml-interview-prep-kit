@@ -93,56 +93,39 @@
 
     [data-theme="light"] #starfield { opacity: 0.15; }
 
-    /* ─── Top Bar ────────────────────────────────────── */
+    /* ─── Top Bar (unified header) ───────────────────── */
     .topbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      background: var(--bg-panel);
-      backdrop-filter: blur(12px);
+      position: fixed; top: 0; left: 0; right: 0; height: 48px;
+      display: flex; align-items: center; padding: 0 16px; gap: 8px;
+      background: var(--bg-panel); backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--bg-panel-border);
       z-index: 100;
-      gap: 12px;
     }
 
     .topbar-brand {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-weight: 700;
-      font-size: 15px;
-      white-space: nowrap;
-      color: var(--text-primary);
-      text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 600; font-size: 14px; white-space: nowrap;
+      color: var(--text-primary); text-decoration: none;
     }
+    .topbar-brand em { color: var(--glow-blue); font-style: normal; }
 
     .topbar-nav {
-      display: flex;
-      align-items: center;
-      gap: 4px;
+      display: flex; align-items: center; gap: 4px;
     }
 
     .topbar-nav a {
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--text-secondary);
-      text-decoration: none;
-      transition: all 0.2s;
+      padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 500;
+      color: var(--text-secondary); text-decoration: none; transition: all 0.2s;
+      white-space: nowrap;
     }
-
     .topbar-nav a:hover { color: var(--text-primary); background: rgba(255,255,255,0.06); }
-    .topbar-nav a.active { color: var(--glow-gold); background: rgba(251,191,36,0.1); }
+    .topbar-nav a.active { color: var(--glow-blue); background: rgba(59,130,246,0.1); }
+    .topbar-nav .nav-sep { width: 1px; height: 16px; background: rgba(255,255,255,0.1); margin: 0 4px; }
+    .beta-badge { display:inline-block; font-size:9px; font-weight:600; letter-spacing:0.5px; padding:1px 5px; border-radius:4px; background:var(--glow-blue); color:#fff; vertical-align:middle; margin-left:3px; line-height:1.4; }
 
     .topbar-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      display: flex; align-items: center; gap: 8px; margin-left: auto;
     }
 
     /* ─── Search ─────────────────────────────────────── */
@@ -616,8 +599,9 @@
       .st-link.animated { animation: none; }
     }
     @media (max-width: 480px) {
-      .topbar { padding: 0 12px; height: 48px; }
-      .topbar-brand { font-size: 13px; }
+      .topbar { padding: 0 10px; gap: 6px; }
+      .topbar-brand { font-size: 12px; }
+      .topbar-brand em { display: none; }
       .legend { min-width: 120px; padding: 8px 10px; }
       .legend h4 { font-size: 9px; }
       .legend-item { font-size: 11px; }
@@ -648,14 +632,18 @@
   <!-- ─── Top Bar ──────────────────────────────────── -->
   <header class="topbar">
     <a href="/" class="topbar-brand">
-      <span style="font-size:20px">🧠</span>
-      <span>ML Interview Prep Kit</span>
+      <span style="font-size:16px">🧠</span>
+      <span>ML Interview <em>Prep Kit</em></span>
     </a>
 
     <nav class="topbar-nav">
-      <a href="/overview-skilltree.html" class="active">Skill Tree</a>
       <a href="/">Mind Map</a>
+      <span class="nav-sep"></span>
       <a href="/docs/">Docs</a>
+      <span class="nav-sep"></span>
+      <a href="/overview-prototypes/bento.html">Bento <span class="beta-badge">BETA</span></a>
+      <a href="/overview-prototypes/skilltree.html" class="active">Skill Tree <span class="beta-badge">BETA</span></a>
+      <a href="/overview-prototypes/mission.html">Mission <span class="beta-badge">BETA</span></a>
     </nav>
 
     <div class="topbar-actions">

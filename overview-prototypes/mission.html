@@ -81,60 +81,43 @@
       100% { transform: translateY(3px); }
     }
 
-    /* ─── Top Navigation ───────────────────────── */
+    /* ─── Top Navigation (unified header) ─────── */
     .top-nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 24px;
-      background: rgba(15, 17, 25, 0.95);
+      display: flex; align-items: center; padding: 0 16px; gap: 8px;
+      height: 48px; background: rgba(15, 17, 25, 0.95);
       border-bottom: 1px solid var(--border-panel);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      backdrop-filter: blur(12px);
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
     }
 
     .top-nav-brand {
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 0.95rem;
-      color: var(--text-bright);
-      text-decoration: none;
-      letter-spacing: 0.5px;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-weight: 600; font-size: 14px;
+      color: var(--text-bright); text-decoration: none;
+      display: flex; align-items: center; gap: 8px;
+      white-space: nowrap;
     }
+    .top-nav-brand em { color: var(--status-blue); font-style: normal; }
 
     .top-nav-links {
-      display: flex;
-      align-items: center;
-      gap: 20px;
+      display: flex; align-items: center; gap: 4px;
     }
 
     .top-nav-links a {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      text-decoration: none;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      transition: color 0.2s;
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 12px; font-weight: 500;
+      color: var(--text-dim); text-decoration: none;
+      padding: 4px 10px; border-radius: 6px;
+      transition: all 0.2s; white-space: nowrap;
     }
-
-    .top-nav-links a:hover,
-    .top-nav-links a.active {
-      color: var(--text-bright);
-    }
-
-    .top-nav-links a.active {
-      border-bottom: 1px solid var(--status-blue);
-      padding-bottom: 2px;
-    }
+    .top-nav-links a:hover { color: var(--text-bright); background: rgba(255,255,255,0.06); }
+    .top-nav-links a.active { color: var(--status-blue); background: rgba(59,130,246,0.1); border-bottom: none; padding-bottom: 4px; }
+    .top-nav-links .nav-sep { width: 1px; height: 16px; background: rgba(255,255,255,0.1); margin: 0 4px; }
+    .beta-badge { display:inline-block; font-size:9px; font-weight:600; letter-spacing:0.5px; padding:1px 5px; border-radius:4px; background:var(--status-blue); color:#fff; vertical-align:middle; margin-left:3px; line-height:1.4; }
+    .top-nav-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
 
     .gh-link svg {
-      width: 20px;
-      height: 20px;
-      fill: var(--text-dim);
-      transition: fill 0.2s;
+      width: 18px; height: 18px; fill: var(--text-dim); transition: fill 0.2s;
     }
     .gh-link:hover svg { fill: var(--text-bright); }
 
@@ -864,9 +847,11 @@
       }
       .mission-title { font-size: 1rem; letter-spacing: 2px; }
       .mission-clock { font-size: 0.85rem; }
-      .top-nav { padding: 8px 14px; }
+      .top-nav { padding: 0 12px; gap: 6px; }
       .top-nav-links { display: none; }
       .mobile-menu-btn { display: flex; }
+      .top-nav-brand em { display: none; }
+      .top-nav-brand { font-size: 12px; }
       .panels-grid { padding: 12px; gap: 12px; }
       .panel-body { max-height: 320px; overflow-y: auto; }
       .timeline-bar { padding: 16px 12px 20px; }
@@ -885,8 +870,8 @@
       .mission-title { font-size: 0.85rem; letter-spacing: 1.5px; }
       .mission-status { font-size: 0.72rem; letter-spacing: 1.5px; }
       .stats-row { font-size: 0.65rem; }
-      .top-nav { padding: 6px 12px; }
-      .top-nav-brand { font-size: 0.82rem; }
+      .top-nav { padding: 0 10px; }
+      .top-nav-brand { font-size: 11px; }
       .command-trigger { padding: 8px 14px; position: fixed; bottom: 12px; right: 12px; z-index: 90; }
       .kb-categories { max-height: 200px; }
       .timeline-bar { padding: 12px 8px 16px; }
@@ -929,18 +914,24 @@
 
   <!-- Top Navigation -->
   <nav class="top-nav">
-    <a href="/" class="top-nav-brand">&#129504; ML Interview Prep Kit</a>
+    <a href="/" class="top-nav-brand"><span style="font-size:16px">🧠</span> ML Interview <em>Prep Kit</em></a>
     <div class="top-nav-links">
-      <a href="/overview-prototypes/mission.html" class="active">Overview</a>
       <a href="/">Mind Map</a>
+      <span class="nav-sep"></span>
       <a href="/docs/">Docs</a>
+      <span class="nav-sep"></span>
+      <a href="/overview-prototypes/bento.html">Bento <span class="beta-badge">BETA</span></a>
+      <a href="/overview-prototypes/skilltree.html">Skill Tree <span class="beta-badge">BETA</span></a>
+      <a href="/overview-prototypes/mission.html" class="active">Mission <span class="beta-badge">BETA</span></a>
+    </div>
+    <div class="top-nav-actions">
       <a href="https://github.com/prasanth-ntu/ml-interview-prep-kit" target="_blank" class="gh-link" aria-label="GitHub">
         <svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
       </a>
+      <button class="mobile-menu-btn" onclick="openMobileDrawer()" aria-label="Open menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
     </div>
-    <button class="mobile-menu-btn" onclick="openMobileDrawer()" aria-label="Open menu">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
   </nav>
 
   <!-- Mobile Navigation Drawer -->

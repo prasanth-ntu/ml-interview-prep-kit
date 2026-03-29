@@ -15,6 +15,7 @@
 ### JD-Specific Resume Tools
 - [ ] Resume generator/modifier that takes a job description and tailors content from the knowledge base
 - [ ] AI prompt template for JD-to-resume alignment
+- [ ] LaTeX resume generator — produce a polished, ATS-friendly PDF resume from knowledge base content and a given JD
 
 ### Research Papers Section
 - [ ] Add a section for reading and summarizing research papers
